@@ -20,10 +20,10 @@ function createScene() {
     scene.add(torso);
 
     //abdomen (cube)
-    var abdomenGeometry = new THREE.BoxGeometry(100, 150, 150);
-    var abdomenMaterial = new THREE.MeshBasicMaterial({ color: 0xff0001 });
+    var abdomenGeometry = new THREE.BoxGeometry(100, 100, 150);
+    var abdomenMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var abdomen = new THREE.Mesh(abdomenGeometry, abdomenMaterial);
-    abdomen.position.set(0,-100,0);
+    abdomen.position.set(0,-125,0);
     scene.add(abdomen);
 }
 
