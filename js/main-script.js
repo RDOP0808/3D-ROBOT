@@ -25,6 +25,20 @@ function createScene() {
     var abdomen = new THREE.Mesh(abdomenGeometry, abdomenMaterial);
     abdomen.position.set(0,-125,0);
     scene.add(abdomen);
+
+    //head (sphere)
+    var headGeometry = new THREE.SphereGeometry(50, 50, 50);
+    var headMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var head = new THREE.Mesh(headGeometry, headMaterial);
+    head.position.set(0,125,0);
+    scene.add(head);
+
+    //waist (cube)
+    var waistGeometry = new THREE.BoxGeometry(300, 50, 150);
+    var waistMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var waist = new THREE.Mesh(waistGeometry, waistMaterial);
+    waist.position.set(0,-200,0);
+    scene.add(waist);
 }
 
 /* CREATE CAMERA(S) */
