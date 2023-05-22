@@ -10,6 +10,21 @@ function createScene() {
     scene.background = new THREE.Color(0x78c1fa);
 
     // Add scene elements, such as objects, lights, etc.
+
+    // Robot
+
+    // torso (Cube)
+    var torsoGeometry = new THREE.BoxGeometry(300, 150, 150);
+    var torsoMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var torso = new THREE.Mesh(torsoGeometry, torsoMaterial);
+    scene.add(torso);
+
+    //abdomen (cube)
+    var abdomenGeometry = new THREE.BoxGeometry(100, 150, 150);
+    var abdomenMaterial = new THREE.MeshBasicMaterial({ color: 0xff0001 });
+    var abdomen = new THREE.Mesh(abdomenGeometry, abdomenMaterial);
+    abdomen.position.set(0,-100,0);
+    scene.add(abdomen);
 }
 
 /* CREATE CAMERA(S) */
