@@ -172,10 +172,22 @@ function onKeyDown(e) {
         case 53: // Numeric key 5
             switchCamera(cameraPerspectiva);
             break;
+        case 54: // Numeric key 6
+            toggleWireframe();
+            break;
         default:
             break;
     }
 }
+
+function toggleWireframe() {
+    // Toggle wireframe mode for all objects in the scene
+    scene.traverse(function (object) {
+      if (object instanceof THREE.Mesh) {
+        object.material.wireframe = !object.material.wireframe;
+      }
+    });
+  }
 
 /* ADD EVENT LISTENERS */
 window.addEventListener('resize', onResize, false);
