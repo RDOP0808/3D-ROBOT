@@ -39,6 +39,22 @@ function createScene() {
     var waist = new THREE.Mesh(waistGeometry, waistMaterial);
     waist.position.set(0,-200,0);
     scene.add(waist);
+
+    //weel1 (cylinder)
+    var weelGeometry = new THREE.CylinderGeometry(50, 50, 50);
+    var weelMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var weel1 = new THREE.Mesh(weelGeometry, weelMaterial);
+    weel1.rotation.z += 77;
+    weel1.position.set(-175,-200,0);
+    scene.add(weel1);
+
+    //weel2 (cylinder)
+    var weelGeometry = new THREE.CylinderGeometry(50, 50, 50);
+    var weelMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var weel2 = new THREE.Mesh(weelGeometry, weelMaterial);
+    weel2.rotation.z += 77;
+    weel2.position.set(175,-200,0);
+    scene.add(weel2);
 }
 
 /* CREATE CAMERA(S) */
