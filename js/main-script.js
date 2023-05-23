@@ -7,7 +7,7 @@ function createScene() {
     scene = new THREE.Scene();
 
     // Set the background color of the scene
-    scene.background = new THREE.Color(0x78c1fa);
+    scene.background = new THREE.Color(0x78d6ff);
 
     // Add scene elements, such as objects, lights, etc.
 
@@ -20,7 +20,7 @@ function createScene() {
     scene.add(torso);
 
     //abdomen (cube)
-    var abdomenGeometry = new THREE.BoxGeometry(100, 100, 150);
+    var abdomenGeometry = new THREE.BoxGeometry(150, 100, 150);
     var abdomenMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var abdomen = new THREE.Mesh(abdomenGeometry, abdomenMaterial);
     abdomen.position.set(0,-125,0);
@@ -34,10 +34,10 @@ function createScene() {
     scene.add(head);
 
     //waist (cube)
-    var waistGeometry = new THREE.BoxGeometry(300, 50, 150);
+    var waistGeometry = new THREE.BoxGeometry(300, 100, 150);
     var waistMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     var waist = new THREE.Mesh(waistGeometry, waistMaterial);
-    waist.position.set(0,-200,0);
+    waist.position.set(0,-225,0);
     scene.add(waist);
 
     //weel1 (cylinder)
@@ -45,16 +45,38 @@ function createScene() {
     var weelMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var weel1 = new THREE.Mesh(weelGeometry, weelMaterial);
     weel1.rotation.z += 77;
-    weel1.position.set(-175,-200,0);
+    weel1.position.set(-175,-225,0);
     scene.add(weel1);
 
     //weel2 (cylinder)
-    var weelGeometry = new THREE.CylinderGeometry(50, 50, 50);
-    var weelMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var weel2 = new THREE.Mesh(weelGeometry, weelMaterial);
     weel2.rotation.z += 77;
-    weel2.position.set(175,-200,0);
+    weel2.position.set(175,-225,0);
     scene.add(weel2);
+
+    //forearm1 (cube)
+    var forearmGeometry = new THREE.BoxGeometry(100, 150, 100);
+    var forearmMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var forearm1 = new THREE.Mesh(forearmGeometry, forearmMaterial);
+    forearm1.position.set(-200,0,-25);
+    scene.add(forearm1);
+
+    //forearm2 (cube)
+    var forearm2 = new THREE.Mesh(forearmGeometry, forearmMaterial);
+    forearm2.position.set(200,0,-25);
+    scene.add(forearm2);
+
+    //arm1 (cube)
+    var armGeometry = new THREE.BoxGeometry(100, 100, 150);
+    var armMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var arm1 = new THREE.Mesh(armGeometry, armMaterial);
+    arm1.position.set(-200,-125,0);
+    scene.add(arm1);
+
+    //arm2 (cube)
+    var arm2 = new THREE.Mesh(armGeometry, armMaterial);
+    arm2.position.set(200,-125,0);
+    scene.add(arm2);
 }
 
 /* CREATE CAMERA(S) */
