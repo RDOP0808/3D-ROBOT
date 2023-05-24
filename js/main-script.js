@@ -1,5 +1,8 @@
 /* GLOBAL VARIABLES */
-var scene, cameraFrontal, cameraLateral, cameraTopo, cameraOrtogonal, cameraPerspectiva, renderer, activeCamera;
+var scene, 
+cameraFrontal, cameraLateral, cameraTopo, cameraOrtogonal, cameraPerspectiva, 
+renderer, 
+activeCamera;
 
 /* CREATE SCENE(S) */
 function createScene() {
@@ -12,71 +15,120 @@ function createScene() {
     // Add scene elements, such as objects, lights, etc.
 
     // Robot
-
-    // torso (Cube)
-    var torsoGeometry = new THREE.BoxGeometry(300, 150, 150);
-    var torsoMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    var torso = new THREE.Mesh(torsoGeometry, torsoMaterial);
-    scene.add(torso);
-
-    //abdomen (cube)
-    var abdomenGeometry = new THREE.BoxGeometry(150, 100, 150);
-    var abdomenMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-    var abdomen = new THREE.Mesh(abdomenGeometry, abdomenMaterial);
-    abdomen.position.set(0,-125,0);
-    scene.add(abdomen);
+    var top, bottom;
 
     //head (sphere)
     var headGeometry = new THREE.SphereGeometry(50, 50, 50);
     var headMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var head = new THREE.Mesh(headGeometry, headMaterial);
     head.position.set(0,125,0);
-    scene.add(head);
+    //ADICIONAR ANTENAS
+    //abdomen (cube)
+    var abdomenGeometry = new THREE.BoxGeometry(150, 100, 150);
+    var abdomenMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var abdomen = new THREE.Mesh(abdomenGeometry, abdomenMaterial);
+    abdomen.position.set(0,-125,0);
 
-    //waist (cube)
-    var waistGeometry = new THREE.BoxGeometry(300, 100, 150);
-    var waistMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    var waist = new THREE.Mesh(waistGeometry, waistMaterial);
-    waist.position.set(0,-225,0);
-    scene.add(waist);
+    // torso (Cube)
+    var torsoGeometry = new THREE.BoxGeometry(300, 150, 150);
+    var torsoMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var torso = new THREE.Mesh(torsoGeometry, torsoMaterial);
 
-    //weel1 (cylinder)
-    var weelGeometry = new THREE.CylinderGeometry(50, 50, 50);
-    var weelMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-    var weel1 = new THREE.Mesh(weelGeometry, weelMaterial);
-    weel1.rotation.z += 77;
-    weel1.position.set(-175,-225,0);
-    scene.add(weel1);
+    //ADD TO TOP
+    var top = new THREE.Object3D();
+    top.add(head);
+    top.add(abdomen);
+    top.add(torso);
 
-    //weel2 (cylinder)
-    var weel2 = new THREE.Mesh(weelGeometry, weelMaterial);
-    weel2.rotation.z += 77;
-    weel2.position.set(175,-225,0);
-    scene.add(weel2);
-
+    var fullArm1, fullArm2;
     //forearm1 (cube)
     var forearmGeometry = new THREE.BoxGeometry(100, 150, 100);
     var forearmMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var forearm1 = new THREE.Mesh(forearmGeometry, forearmMaterial);
     forearm1.position.set(-200,0,-25);
-    scene.add(forearm1);
-
     //forearm2 (cube)
     var forearm2 = new THREE.Mesh(forearmGeometry, forearmMaterial);
     forearm2.position.set(200,0,-25);
-    scene.add(forearm2);
-
     //arm1 (cube)
     var armGeometry = new THREE.BoxGeometry(100, 100, 150);
     var armMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     var arm1 = new THREE.Mesh(armGeometry, armMaterial);
     arm1.position.set(-200,-125,0);
-    scene.add(arm1);
-
     //arm2 (cube)
     var arm2 = new THREE.Mesh(armGeometry, armMaterial);
     arm2.position.set(200,-125,0);
-    scene.add(arm2);
+    //FAZERTUBOS DE ESCAPE E DPS ADD.(TUBOSDEESCAPE)
+    fullArm1 = new THREE.Object3D();
+    fullArm1.add(arm1);
+    fullArm1.add(forearm1);
+    fullArm2 = new THREE.Object3D();
+    fullArm2.add(arm2);
+    fullArm2.add(forearm2);
+
+    //ADD TO TOP
+    top.add(fullArm1);
+    top.add(fullArm2);
+    //TOP COMPLETE
+
+
+    var fullWaist;
+    //waist (cube)
+    var waistGeometry = new THREE.BoxGeometry(300, 100, 150);
+    var waistMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var waist = new THREE.Mesh(waistGeometry, waistMaterial);
+    waist.position.set(0,-225,0);
+    //wheel1 (cylinder)
+    var wheelGeometry = new THREE.CylinderGeometry(50, 50, 50);
+    var wheelMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var wheel1 = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    wheel1.rotation.z += 77;
+    wheel1.position.set(-175,-225,0);
+    //wheel2 (cylinder)
+    var wheel2 = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    wheel2.rotation.z += 77;
+    wheel2.position.set(175,-225,0);
+   
+    fullWaist = new THREE.Object3D();
+    fullWaist.add(waist);
+    fullWaist.add(wheel1);
+    fullWaist.add(wheel2);
+
+    var fullLeg1, fullLeg2; //ADICIONAR COXAAAA
+    //leg1 (cube)
+    var legGeometry = new THREE.BoxGeometry(50, 300, 150);
+    var legMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var leg1 = new THREE.Mesh(legGeometry, legMaterial);
+    leg1.position.set(-200,-225,0);
+    //leg2 (cube)
+    var leg2 = new THREE.Mesh(legGeometry, legMaterial);
+    leg2.position.set(-200,-225,0);
+    //foot1 (cube)
+    var footGeometry = new THREE.BoxGeometry(300, 100, 150);
+    var footMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff  });
+    var foot1 = new THREE.Mesh(footGeometry, footMaterial);
+    foot1.position.set(0,-225,0);
+    //foot2 (cube)
+    var foot2 = new THREE.Mesh(footGeometry, footMaterial);
+    foot2.position.set(0,-225,0);
+
+    fullLeg1 = new THREE.Object3D();
+    fullLeg1.add(leg1);
+    fullLeg1.add(foot1);
+    fullLeg2 = new THREE.Object3D();
+    fullLeg2.add(leg2);
+    fullLeg2.add(foot2);
+
+    //ADD TO BOTTOM
+    var bottom = new THREE.Object3D();
+    bottom.add(fullWaist);
+    bottom.add(fullLeg1);
+    bottom.add(fullLeg2);
+    //BOTTOM COMPLETE
+
+   //add hierarchies (ou la como se escreve)
+    scene.add(top);
+    scene.add(bottom);
+
 }
 
 /* CREATE CAMERA(S) */
