@@ -97,51 +97,69 @@ function createScene() {
     //TOP COMPLETE
 
 
-    var fullWaist;
+    // ---- PARTE DE BAIXO ---
+    var fullWaist = new THREE.Object3D();
+
     //waist (cube)
     var waistGeometry = new THREE.BoxGeometry(300, 100, 150);
-    var waistMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var waistMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var waist = new THREE.Mesh(waistGeometry, waistMaterial);
     waist.position.set(0,-225,0);
+    fullWaist.add(waist);
+
     //wheel1 (cylinder)
     var wheelGeometry = new THREE.CylinderGeometry(50, 50, 50);
-    var wheelMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var wheelMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     var wheel1 = new THREE.Mesh(wheelGeometry, wheelMaterial);
     wheel1.rotation.z += 77;
     wheel1.position.set(-175,-225,0);
+    fullWaist.add(wheel1);
+
     //wheel2 (cylinder)
     var wheel2 = new THREE.Mesh(wheelGeometry, wheelMaterial);
     wheel2.rotation.z += 77;
     wheel2.position.set(175,-225,0);
-   
-    fullWaist = new THREE.Object3D();
-    fullWaist.add(waist);
-    fullWaist.add(wheel1);
     fullWaist.add(wheel2);
 
-    var fullLeg1, fullLeg2; //ADICIONAR COXAAAA
-    //leg1 (cube)
-    var legGeometry = new THREE.BoxGeometry(50, 300, 150);
-    var legMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-    var leg1 = new THREE.Mesh(legGeometry, legMaterial);
-    leg1.position.set(-200,-225,0);
-    //leg2 (cube)
-    var leg2 = new THREE.Mesh(legGeometry, legMaterial);
-    leg2.position.set(-200,-225,0);
+    // ---- PERNAS ----
+    var fullLeg1 = new THREE.Object3D();
+    var fullLeg2 = new THREE.Object3D();
+
+    //coxa1 (cube)
+    var coxaGeometry = new THREE.BoxGeometry(50, 200, 50);
+    var coxaMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var coxa1 = new THREE.Mesh(coxaGeometry, coxaMaterial);
+    coxa1.position.set(-100,-375,0);
+    fullLeg1.add(coxa1);
+
+    //coxa2 (cube)
+    var coxa2 = new THREE.Mesh(coxaGeometry, coxaMaterial);
+    coxa2.position.set(100,-375,0);
+    fullLeg2.add(coxa2);
+
+    //perna1 (cube)
+    var pernaGeometry = new THREE.BoxGeometry(100, 200, 100);
+    var pernaMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var perna1 = new THREE.Mesh(pernaGeometry, pernaMaterial);
+    perna1.position.set(-100,-575,0);
+    fullLeg1.add(perna1);
+
+    //perna2 (cube)
+    var perna2 = new THREE.Mesh(pernaGeometry, pernaMaterial);
+    perna2.position.set(100,-575,0);
+    fullLeg2.add(perna2);
+
+    // ---- PES ----
+
     //foot1 (cube)
-    var footGeometry = new THREE.BoxGeometry(300, 100, 150);
-    var footMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff  });
+    var footGeometry = new THREE.BoxGeometry(150, 50, 125);
+    var footMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000  });
     var foot1 = new THREE.Mesh(footGeometry, footMaterial);
-    foot1.position.set(0,-225,0);
+    foot1.position.set(100,-675,12.5);
+    fullLeg1.add(foot1);
     //foot2 (cube)
     var foot2 = new THREE.Mesh(footGeometry, footMaterial);
-    foot2.position.set(0,-225,0);
-
-    fullLeg1 = new THREE.Object3D();
-    fullLeg1.add(leg1);
-    fullLeg1.add(foot1);
-    fullLeg2 = new THREE.Object3D();
-    fullLeg2.add(leg2);
+    foot2.position.set(-100,-675,12.5);
     fullLeg2.add(foot2);
 
     //ADD TO BOTTOM
@@ -158,7 +176,18 @@ function createScene() {
 
 
     // ------------------------REBOQUE-----------------------------------
-    
+    //var weel_reboque;
+    //var peca_ligacao;
+    /*
+    var contentorGeometry = new THREE.BoxGeometry(500, 500, 1000);
+    var contentorMaterial = new THREE.MeshBasicMaterial({ color: 0x0a4e6b });
+    var contentor = new THREE.Mesh(contentorGeometry, contentorMaterial);
+    contentor.position.set(0,-75,-700);
+
+    var reboque = new THREE.Object3D();
+    reboque.add(contentor);
+    scene.add(reboque);
+    */
 
 }
 
@@ -166,7 +195,7 @@ function createScene() {
 function createCameras() {
     'use strict';
 
-    var viewSize = 1000; // Adjust this value based on the size of your scene
+    var viewSize = 2000 // Adjust this value based on the size of your scene
     var aspectRatio = window.innerWidth / window.innerHeight;
 
     // Frontal camera 
