@@ -6,6 +6,10 @@ activeCamera;
 
 var materials = []; // Array to store materials
 
+var fullhead = new THREE.Object3D();
+
+var head_movement = 0 ;
+
 /* CREATE SCENE(S) */
 function createScene() {
     'use strict';
@@ -17,10 +21,10 @@ function createScene() {
     // ------------------------ROBOT-----------------------------------
     var robot = new THREE.Object3D();
 
-    var blueMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-    var redMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    var whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    var blackMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    var blueMaterial = new THREE.MeshBasicMaterial({ color: 0xbcff1f });
+    var redMaterial = new THREE.MeshBasicMaterial({ color: 0xff1fad});
+    var whiteMaterial = new THREE.MeshBasicMaterial({ color: 0x1f8bff });
+    var blackMaterial = new THREE.MeshBasicMaterial({ color: 0xffa51f });
     materials.push(blueMaterial); // Add material to materials array
     materials.push(redMaterial); // Add material to materials array
     materials.push(whiteMaterial); // Add material to materials array
@@ -28,10 +32,7 @@ function createScene() {
 
     // ---- PARTE DE CIMA ----
     var top = new THREE.Object3D();
-
-    // ---- CABEÇA ----
-    var fullhead = new THREE.Object3D();
-
+    
     //head (cube)
     var headGeometry = new THREE.BoxGeometry(8, 8, 8);
     var head = new THREE.Mesh(headGeometry, blueMaterial);
@@ -126,7 +127,7 @@ function createScene() {
     fullWaist.add(waist);
 
     //Right wheel (cylinder)
-    var wheelGeometry = new THREE.CylinderGeometry(5, 5, 5);
+    var wheelGeometry = new THREE.CylinderGeometry(5, 5, 5, 10);
     var wheelR = new THREE.Mesh(wheelGeometry, blackMaterial);
     wheelR.rotation.z = Math.PI / 2;
     wheelR.position.set(-17.5,-22.5,0);
@@ -221,9 +222,9 @@ function createScene() {
     var reboque = new THREE.Object3D();
 
     // ---- CONTENTOR ----
-    var contentorGeometry = new THREE.BoxGeometry(30, 40, 120);
+    var contentorGeometry = new THREE.BoxGeometry(30, 40, 80);
     var contentor = new THREE.Mesh(contentorGeometry, whiteMaterial);
-    contentor.position.set(0,-2.5,-100);
+    contentor.position.set(0,-2.5,-80);
     reboque.add(contentor);
 
     // ---- RODAS ----
@@ -233,7 +234,7 @@ function createScene() {
     reboque.add(wheel1_reboque);
 
     var wheel2_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
-    wheel2_reboque.position.set(17.5,-22.5,-150);
+    wheel2_reboque.position.set(17.5,-22.5,-100);
     wheel2_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel2_reboque);
 
@@ -243,7 +244,7 @@ function createScene() {
     reboque.add(wheel3_reboque);
 
     var wheel4_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
-    wheel4_reboque.position.set(-17.5,-22.5,-150);
+    wheel4_reboque.position.set(-17.5,-22.5,-100);
     wheel4_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel4_reboque);
 
@@ -255,7 +256,7 @@ function createScene() {
     
     // ----------- POSICIONAR ROBOT E REBOQUE ----------------
     robot.position.z += 70;
-    reboque.position.z += 70;
+    reboque.position.z += 40;
     scene.add(robot);
     scene.add(reboque);
 }
@@ -306,7 +307,16 @@ function switchCamera(camera) {
 /* UPDATE */
 function update() {
     'use strict';
-    // Update scene elements, animations, etc.
+    update_robot();
+}
+
+function update_robot(){
+    var min_head=0;
+    var max_head=Math.PI;
+
+    if ( fullhead.rotation.x + head_movement <= max_head && fullhead.rotation.x  + head_movement>= min_head){
+        fullhead.rotation.x = fullhead.rotation.x + head_movement ; 
+    }
 }
 
 /* RENDER */
@@ -318,47 +328,34 @@ function render() {
 /* INITIALIZE ANIMATION CYCLE */
 function init() {
     'use strict';
-    createScene();
-    createCameras();
-
     // Initialize renderer
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
+    createScene();
+    createCameras();
+
+    render();
     // Call the animate function to start the animation loop
-    animate();
+    
+    /* ADD EVENT LISTENERS */
+    window.addEventListener('resize', onResize);
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
 }
 
 /* ANIMATION CYCLE */
 function animate() {
     'use strict';
-    requestAnimationFrame(animate);
-
     update();
     render();
+    requestAnimationFrame(animate);
 }
 
 /* RESIZE WINDOW CALLBACK */
 function onResize() {
     'use strict';
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    // Update camera aspect ratios if necessary
-    cameraFrontal.aspect = window.innerWidth / window.innerHeight;
-    cameraFrontal.updateProjectionMatrix();
-
-    cameraLateral.aspect = window.innerWidth / window.innerHeight;
-    cameraLateral.updateProjectionMatrix();
-
-    cameraTopo.aspect = window.innerWidth / window.innerHeight;
-    cameraTopo.updateProjectionMatrix();
-
-    cameraOrtogonal.aspect = window.innerWidth / window.innerHeight;
-    cameraOrtogonal.updateProjectionMatrix();
-
-    cameraPerspectiva.aspect = window.innerWidth / window.innerHeight;
-    cameraPerspectiva.updateProjectionMatrix();
 }
 
 /* KEY DOWN CALLBACK */
@@ -383,9 +380,26 @@ function onKeyDown(e) {
         case 54: // Numeric key 6
             toggleWireframe();
             break;
-        case 81: // key Q
-            footL.rotation.x+=0.1;
-            footR.rotation.x+=0.1;
+        case 82: // key R
+            head_movement = Math.PI / 100;
+            break;
+        case 70: // key F 
+            head_movement = -Math.PI / 100;
+            break;
+        default:
+            break;
+    }
+}
+
+/* KEY UP CALLBACK */
+function onKeyUp(e) {
+    'use strict';
+    switch (e.keyCode) {
+        case 82: // key R
+            head_movement = 0;
+            break;
+        case 70: // key F 
+            head_movement = 0;
             break;
         default:
             break;
@@ -399,9 +413,6 @@ function toggleWireframe() {
     }
 }
 
-/* ADD EVENT LISTENERS */
-window.addEventListener('resize', onResize, false);
-window.addEventListener('keydown', onKeyDown, false);
 
 // Start the initialization process
 init();
