@@ -18,13 +18,20 @@ function createScene() {
     var top, bottom;
 
     //head (sphere)
-    var headGeometry = new THREE.SphereGeometry(50, 50, 50);
+    var headGeometry = new THREE.BoxGeometry(80, 80, 80);
     var headMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var head = new THREE.Mesh(headGeometry, headMaterial);
     head.position.set(0,125,0);
     //ADICIONAR ANTENAS
+    var antenasGeometry = new THREE.CylinderGeometry(10,10,70);
+    var antenasMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var antenas1 = new THREE.Mesh(antenasGeometry, antenasMaterial);
+    var antenas2 = new THREE.Mesh(antenasGeometry, antenasMaterial);
+    antenas1.position.set(50,140,0);
+    antenas2.position.set(-50,140,0);
+
     //abdomen (cube)
-    var abdomenGeometry = new THREE.BoxGeometry(150, 100, 150);
+    var abdomenGeometry = new THREE.BoxGeometry(100, 50, 100); //largura altura profundidade
     var abdomenMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var abdomen = new THREE.Mesh(abdomenGeometry, abdomenMaterial);
     abdomen.position.set(0,-125,0);
@@ -37,6 +44,8 @@ function createScene() {
     //ADD TO TOP
     var top = new THREE.Object3D();
     top.add(head);
+    top.add(antenas1);
+    top.add(antenas2);
     top.add(abdomen);
     top.add(torso);
 
