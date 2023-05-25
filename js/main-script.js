@@ -20,9 +20,11 @@ function createScene() {
     var blueMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var redMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     var whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    var blackMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
     materials.push(blueMaterial); // Add material to materials array
     materials.push(redMaterial); // Add material to materials array
     materials.push(whiteMaterial); // Add material to materials array
+    materials.push(blackMaterial); // Add material to materials array
 
     // ---- PARTE DE CIMA ----
     var top = new THREE.Object3D();
@@ -125,13 +127,13 @@ function createScene() {
 
     //Right wheel (cylinder)
     var wheelGeometry = new THREE.CylinderGeometry(5, 5, 5);
-    var wheelR = new THREE.Mesh(wheelGeometry, redMaterial);
+    var wheelR = new THREE.Mesh(wheelGeometry, blackMaterial);
     wheelR.rotation.z = Math.PI / 2;
     wheelR.position.set(-17.5,-22.5,0);
     fullWaist.add(wheelR);
 
     //Left wheel (cylinder)
-    var wheelL = new THREE.Mesh(wheelGeometry, redMaterial);
+    var wheelL = new THREE.Mesh(wheelGeometry, blackMaterial);
     wheelL.rotation.z = Math.PI / 2;
     wheelL.position.set(17.5,-22.5,0);
     fullWaist.add(wheelL);
@@ -154,13 +156,13 @@ function createScene() {
     fullLegR.add(pernaR);
 
     //Right legWheelTopR (cylinder)
-    var legWheelTopR = new THREE.Mesh(wheelGeometry, redMaterial);
+    var legWheelTopR = new THREE.Mesh(wheelGeometry, blackMaterial);
     legWheelTopR.rotation.z = Math.PI / 2;
     legWheelTopR.position.set(-17.5,-52.5,0);
     fullWaist.add(legWheelTopR);
 
     //Right legWheelBottomR (cylinder)
-    var legWheelBottomR = new THREE.Mesh(wheelGeometry, redMaterial);
+    var legWheelBottomR = new THREE.Mesh(wheelGeometry, blackMaterial);
     legWheelBottomR.rotation.z = Math.PI / 2;
     legWheelBottomR.position.set(-17.5,-65,0);
     fullWaist.add(legWheelBottomR);
@@ -178,13 +180,13 @@ function createScene() {
     fullLegL.add(pernaL);
 
     //Left legWheelTopL (cylinder)
-    var legWheelTopL = new THREE.Mesh(wheelGeometry, redMaterial);
+    var legWheelTopL = new THREE.Mesh(wheelGeometry, blackMaterial);
     legWheelTopL.rotation.z = Math.PI / 2;
     legWheelTopL.position.set(17.5,-52.5,0);
     fullWaist.add(legWheelTopL);
 
     //Left legWheelBottomL (cylinder)
-    var legWheelBottomL = new THREE.Mesh(wheelGeometry, redMaterial);
+    var legWheelBottomL = new THREE.Mesh(wheelGeometry, blackMaterial);
     legWheelBottomL.rotation.z = Math.PI / 2;
     legWheelBottomL.position.set(17.5,-65,0);
     fullWaist.add(legWheelBottomL);
@@ -225,22 +227,22 @@ function createScene() {
     reboque.add(contentor);
 
     // ---- RODAS ----
-    var wheel1_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
+    var wheel1_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
     wheel1_reboque.position.set(27.5,-22.5,-50);
     wheel1_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel1_reboque);
 
-    var wheel2_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
+    var wheel2_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
     wheel2_reboque.position.set(27.5,-22.5,-150);
     wheel2_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel2_reboque);
 
-    var wheel3_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
+    var wheel3_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
     wheel3_reboque.position.set(-27.5,-22.5,-50);
     wheel3_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel3_reboque);
 
-    var wheel4_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
+    var wheel4_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
     wheel4_reboque.position.set(-27.5,-22.5,-150);
     wheel4_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel4_reboque);
@@ -253,7 +255,7 @@ function createScene() {
     
     // ----------- POSICIONAR ROBOT E REBOQUE ----------------
     robot.position.z += 70;
-    reboque.position.z += 70;
+    reboque.position.z += 7.5;
     scene.add(robot);
     scene.add(reboque);
 }
@@ -286,8 +288,8 @@ function createCameras() {
     cameraOrtogonal.lookAt(scene.position);
 
     // Perspective isometric camera
-    cameraPerspectiva = new THREE.PerspectiveCamera(45,viewSize, -1000, 1000);
-    cameraPerspectiva.position.set(50, 50, 50);
+    cameraPerspectiva = new THREE.PerspectiveCamera(70,aspectRatio, 1, 1000);
+    cameraPerspectiva.position.set(100, 100, 100);
     cameraPerspectiva.lookAt(scene.position);
 
     // Set the initial active camera
@@ -380,6 +382,10 @@ function onKeyDown(e) {
             break;
         case 54: // Numeric key 6
             toggleWireframe();
+            break;
+        case 81: // key Q
+            footL.rotation.x+=0.1;
+            footR.rotation.x+=0.1;
             break;
         default:
             break;
