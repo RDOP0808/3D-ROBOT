@@ -117,13 +117,13 @@ function createScene() {
     //Right wheel (cylinder)
     var wheelGeometry = new THREE.CylinderGeometry(50, 50, 50);
     var wheelR = new THREE.Mesh(wheelGeometry, redMaterial);
-    wheelR.rotation.z += 77;
+    wheelR.rotation.z = Math.PI / 2;
     wheelR.position.set(-175,-225,0);
     fullWaist.add(wheelR);
 
     //Left wheel (cylinder)
     var wheelL = new THREE.Mesh(wheelGeometry, redMaterial);
-    wheelL.rotation.z += 77;
+    wheelL.rotation.z = Math.PI / 2;
     wheelL.position.set(175,-225,0);
     fullWaist.add(wheelL);
 
