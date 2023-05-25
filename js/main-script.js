@@ -14,7 +14,7 @@ function createScene() {
     // Set the background color of the scene
     scene.background = new THREE.Color(0x78d6ff);
 
-    // ------------------------ROBOT-----------------------------------
+    // ------------------------ROBOT-----------------------------------//
     var top, bottom;
     var blueMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var redMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
@@ -30,17 +30,17 @@ function createScene() {
     //head (cube)
     var headGeometry = new THREE.BoxGeometry(80, 80, 80);
     var head = new THREE.Mesh(headGeometry, blueMaterial);
-    head.position.set(0,125,0);
+    head.position.set(0,115,0);
     fullhead.add(head);
 
     //antenas (cylinder)
     var antenasGeometry = new THREE.CylinderGeometry(10,10,70);
-    var antenas1 = new THREE.Mesh(antenasGeometry, redMaterial);
-    var antenas2 = new THREE.Mesh(antenasGeometry, redMaterial);
-    antenas1.position.set(50,140,0);
-    antenas2.position.set(-50,140,0);
-    fullhead.add(antenas1);
-    fullhead.add(antenas2);
+    var antenasR = new THREE.Mesh(antenasGeometry, redMaterial);
+    var antenasL = new THREE.Mesh(antenasGeometry, redMaterial);
+    antenasR.position.set(-50,140,0);
+    antenasL.position.set(50,140,0);
+    fullhead.add(antenasR);
+    fullhead.add(antenasL);
 
     top.add(fullhead);
 
@@ -58,46 +58,47 @@ function createScene() {
     top.add(abdomen);
 
     // ---- BRAÇOS ----
-    var fullArm1 = new THREE.Object3D();
-    var fullArm2 = new THREE.Object3D();
+    var fullArmR = new THREE.Object3D();
+    var fullArmL = new THREE.Object3D();
 
-    //arm1 (cube)
-    var armGeometry = new THREE.BoxGeometry(100, 150, 100);
-    var arm1 = new THREE.Mesh(armGeometry, blueMaterial);
-    arm1.position.set(-200,0,-25);
-    fullArm1.add(arm1);
+    //Right arm(cube)
+    var armGeometry = new THREE.BoxGeometry(100, 150, 150);
+    var armR = new THREE.Mesh(armGeometry, blueMaterial);
+    armR.position.set(-200,0,0); 
+    fullArmR.add(armR);
 
-    //arm2 (cube)
-    var arm2 = new THREE.Mesh(armGeometry, blueMaterial);
-    arm2.position.set(200,0,-25); 
-    fullArm2.add(arm2);
-
-    //forearm1 (cube)
+    //Right forearm (cube)
     var forearmGeometry = new THREE.BoxGeometry(100, 100, 150);
-    var forearm1 = new THREE.Mesh(forearmGeometry, redMaterial);
-    forearm1.position.set(-200,-125,0);
-    fullArm1.add(forearm1)
+    var forearmR = new THREE.Mesh(forearmGeometry, redMaterial);
+    forearmR.position.set(-200,-125,0);
+    fullArmR.add(forearmR)
 
-    //forearm2 (cube)
-    var forearm2 = new THREE.Mesh(forearmGeometry, redMaterial);
-    forearm2.position.set(200,-125,0);
-    fullArm2.add(forearm2);
+    //Right tuboEscape (cylinder)
+    var tuboEscapeGeometry = new THREE.CylinderGeometry(25, 25, 150);
+    var tuboEscapeR = new THREE.Mesh(tuboEscapeGeometry, redMaterial);
+    tuboEscapeR.position.set(-275,75,0);
+    fullArmR.add(tuboEscapeR);
 
-    //tuboEscape1 (cylinder)
-    var tuboEscapeGeometry = new THREE.CylinderGeometry(50, 50, 100);
-    var tuboEscape1 = new THREE.Mesh(tuboEscapeGeometry, blueMaterial);
-    tuboEscape1.position.set(-300,-125,-25);
-    fullArm1.add(tuboEscape1);
 
-    //tuboEscape2 (cylinder)
-    var tuboEscapeGeometry = new THREE.CylinderGeometry(50, 50, 100);
-    var tuboEscape2 = new THREE.Mesh(tuboEscapeGeometry, blueMaterial);
-    tuboEscape2.position.set(300,-125,-25);
-    fullArm2.add(tuboEscape2);
+    //Left arm (cube)
+    var armL = new THREE.Mesh(armGeometry, blueMaterial);
+    armL.position.set(200,0,0); 
+    fullArmL.add(armL);
+
+    //Left forearm (cube)
+    var forearmL = new THREE.Mesh(forearmGeometry, redMaterial);
+    forearmL.position.set(200,-125,0);
+    fullArmL.add(forearmL);
+
+    //Left tuboEscape (cylinder)
+    var tuboEscapeL = new THREE.Mesh(tuboEscapeGeometry, redMaterial);
+    tuboEscapeL.position.set(275,75,0);
+    fullArmL.add(tuboEscapeL);
+
 
     //ADD TO TOP
-    top.add(fullArm1);
-    top.add(fullArm2);
+    top.add(fullArmR);
+    top.add(fullArmL);
     //TOP COMPLETE
 
     
@@ -110,62 +111,65 @@ function createScene() {
     waist.position.set(0,-225,0);
     fullWaist.add(waist);
 
-    //wheel1 (cylinder)
+    //Right wheel (cylinder)
     var wheelGeometry = new THREE.CylinderGeometry(50, 50, 50);
-    var wheel1 = new THREE.Mesh(wheelGeometry, redMaterial);
-    wheel1.rotation.z += 77;
-    wheel1.position.set(-175,-225,0);
-    fullWaist.add(wheel1);
+    var wheelR = new THREE.Mesh(wheelGeometry, redMaterial);
+    wheelR.rotation.z += 77;
+    wheelR.position.set(-175,-225,0);
+    fullWaist.add(wheelR);
 
-    //wheel2 (cylinder)
-    var wheel2 = new THREE.Mesh(wheelGeometry, redMaterial);
-    wheel2.rotation.z += 77;
-    wheel2.position.set(175,-225,0);
-    fullWaist.add(wheel2);
+    //Left wheel (cylinder)
+    var wheelL = new THREE.Mesh(wheelGeometry, redMaterial);
+    wheelL.rotation.z += 77;
+    wheelL.position.set(175,-225,0);
+    fullWaist.add(wheelL);
 
     // ---- PERNAS ----
-    var fullLeg1 = new THREE.Object3D();
-    var fullLeg2 = new THREE.Object3D();
+    var fullLegR = new THREE.Object3D();
+    var fullLegL = new THREE.Object3D();
 
-    //coxa1 (cube)
+    //Right coxa (cube)
     var coxaGeometry = new THREE.BoxGeometry(50, 200, 50);
-    var coxa1 = new THREE.Mesh(coxaGeometry, redMaterial);
-    coxa1.position.set(-100,-375,0);
-    fullLeg1.add(coxa1);
+    var coxaR = new THREE.Mesh(coxaGeometry, redMaterial);
+    coxaR.position.set(-100,-375,0);
+    fullLegR.add(coxaR);
 
-    //coxa2 (cube)
-    var coxa2 = new THREE.Mesh(coxaGeometry, redMaterial);
-    coxa2.position.set(100,-375,0);
-    fullLeg2.add(coxa2);
-
-    //perna1 (cube)
+    //Right perna (cube)
     var pernaGeometry = new THREE.BoxGeometry(100, 200, 100);
-    var perna1 = new THREE.Mesh(pernaGeometry, blueMaterial);
-    perna1.position.set(-100,-575,0);
-    fullLeg1.add(perna1);
+    var pernaR = new THREE.Mesh(pernaGeometry, blueMaterial);
+    pernaR.position.set(-100,-575,0);
+    fullLegR.add(pernaR);
 
-    //perna2 (cube)
-    var perna2 = new THREE.Mesh(pernaGeometry, blueMaterial);
-    perna2.position.set(100,-575,0);
-    fullLeg2.add(perna2);
+
+    //Left coxa (cube)
+    var coxaL = new THREE.Mesh(coxaGeometry, redMaterial);
+    coxaL.position.set(100,-375,0);
+    fullLegL.add(coxaL);
+
+    //Left perna (cube)
+    var pernaL = new THREE.Mesh(pernaGeometry, blueMaterial);
+    pernaL.position.set(100,-575,0);
+    fullLegL.add(pernaL);
+
 
     // ---- PES ----
 
-    //foot1 (cube)
+    //Right foot (cube)
     var footGeometry = new THREE.BoxGeometry(150, 25, 125);
-    var foot1 = new THREE.Mesh(footGeometry, redMaterial);
-    foot1.position.set(100,-687.5,12.5);
-    fullLeg1.add(foot1);
-    //foot2 (cube)
-    var foot2 = new THREE.Mesh(footGeometry, redMaterial);
-    foot2.position.set(-100,-687.5,12.5);
-    fullLeg2.add(foot2);
+    var footR = new THREE.Mesh(footGeometry, redMaterial);
+    footR.position.set(-100,-687.5,12.5);
+    fullLegR.add(footR);
+
+    //Left foot (cube)
+    var footL = new THREE.Mesh(footGeometry, redMaterial);
+    footL.position.set(100,-687.5,12.5);
+    fullLegL.add(footL);
 
     //ADD TO BOTTOM
     var bottom = new THREE.Object3D();
     bottom.add(fullWaist);
-    bottom.add(fullLeg1);
-    bottom.add(fullLeg2);
+    bottom.add(fullLegR);
+    bottom.add(fullLegL);
     //BOTTOM COMPLETE
 
    //add hierarchies (ou la como se escreve)
