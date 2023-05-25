@@ -7,8 +7,12 @@ activeCamera;
 var materials = []; // Array to store materials
 
 var fullhead = new THREE.Object3D();
+var feet = new THREE.Object3D();
+var bottom = new THREE.Object3D();
 
 var head_movement = 0 ;
+var feet_movement = 0;
+var bottom_movement = 0;
 
 /* CREATE SCENE(S) */
 function createScene() {
@@ -36,15 +40,15 @@ function createScene() {
     //head (cube)
     var headGeometry = new THREE.BoxGeometry(8, 8, 8);
     var head = new THREE.Mesh(headGeometry, blueMaterial);
-    head.position.set(0,11.5,0);
+    head.position.set(0,4,0);
     fullhead.add(head);
 
     //antenas (cylinder)
     var antenasGeometry = new THREE.CylinderGeometry(1,1,7);
     var antenasR = new THREE.Mesh(antenasGeometry, redMaterial);
     var antenasL = new THREE.Mesh(antenasGeometry, redMaterial);
-    antenasR.position.set(-5,14,0);
-    antenasL.position.set(5,14,0);
+    antenasR.position.set(-5,6.5,0);
+    antenasL.position.set(5,6.5,0);
     fullhead.add(antenasR);
     fullhead.add(antenasL);
 
@@ -52,10 +56,12 @@ function createScene() {
     var olhoGeometry = new THREE.BoxGeometry(2,1,0.5);
     var olhoR = new THREE.Mesh(olhoGeometry, redMaterial);
     var olhoL = new THREE.Mesh(olhoGeometry, redMaterial);
-    olhoR.position.set(-2,11.5,4.25);
-    olhoL.position.set(2,11.5,4.25);
+    olhoR.position.set(-2,4,4.25);
+    olhoL.position.set(2,4,4.25);
     fullhead.add(olhoR);
     fullhead.add(olhoL);
+
+    fullhead.position.set(0,7.49,0);
 
     top.add(fullhead);
 
@@ -141,20 +147,19 @@ function createScene() {
 
 
     // ---- PERNAS ----
-    var fullLegR = new THREE.Object3D();
-    var fullLegL = new THREE.Object3D();
+    var fullLeg = new THREE.Object3D();
 
     //Right coxa (cube)
     var coxaGeometry = new THREE.BoxGeometry(5, 20, 5);
     var coxaR = new THREE.Mesh(coxaGeometry, redMaterial);
     coxaR.position.set(-10,-37.5,0);
-    fullLegR.add(coxaR);
+    fullLeg.add(coxaR);
 
     //Right perna (cube)
     var pernaGeometry = new THREE.BoxGeometry(10, 25, 7.5);
     var pernaR = new THREE.Mesh(pernaGeometry, blueMaterial);
     pernaR.position.set(-10,-60,0);
-    fullLegR.add(pernaR);
+    fullLeg.add(pernaR);
 
     //Right legWheelTopR (cylinder)
     var legWheelTopR = new THREE.Mesh(wheelGeometry, blackMaterial);
@@ -173,12 +178,12 @@ function createScene() {
     //Left coxa (cube)
     var coxaL = new THREE.Mesh(coxaGeometry, redMaterial);
     coxaL.position.set(10,-37.5,0);
-    fullLegL.add(coxaL);
+    fullLeg.add(coxaL);
 
     //Left perna (cube)
     var pernaL = new THREE.Mesh(pernaGeometry, blueMaterial);
     pernaL.position.set(10,-60,0);
-    fullLegL.add(pernaL);
+    fullLeg.add(pernaL);
 
     //Left legWheelTopL (cylinder)
     var legWheelTopL = new THREE.Mesh(wheelGeometry, blackMaterial);
@@ -200,18 +205,18 @@ function createScene() {
     var footGeometry = new THREE.BoxGeometry(10, 2.5, 7.5);
     var footR = new THREE.Mesh(footGeometry, redMaterial);
     footR.position.set(-10,-71.25,7.5);
-    fullLegR.add(footR);
 
     //Left foot (cube)
     var footL = new THREE.Mesh(footGeometry, redMaterial);
     footL.position.set(10,-71.25,7.5);
-    fullLegL.add(footL);
 
+    feet.add(footR);
+    feet.add(footL);
+    
+    fullLeg.add(feet);
     //ADD TO BOTTOM
-    var bottom = new THREE.Object3D();
     bottom.add(fullWaist);
-    bottom.add(fullLegR);
-    bottom.add(fullLegL);
+    bottom.add(fullLeg);
     //BOTTOM COMPLETE
 
     robot.add(top);
@@ -256,7 +261,7 @@ function createScene() {
     
     // ----------- POSICIONAR ROBOT E REBOQUE ----------------
     robot.position.z += 70;
-    reboque.position.z += 40;
+    reboque.position.z += 27.5;
     scene.add(robot);
     scene.add(reboque);
 }
@@ -313,9 +318,21 @@ function update() {
 function update_robot(){
     var min_head=0;
     var max_head=Math.PI;
+    var min_feet=-0.01;
+    var max_feet=Math.PI + 0.01;
+    var min_bottom=-0.01;
+    var max_bottom=Math.PI/2 + 0.01;
 
     if ( fullhead.rotation.x + head_movement <= max_head && fullhead.rotation.x  + head_movement>= min_head){
         fullhead.rotation.x = fullhead.rotation.x + head_movement ; 
+    }
+
+    if ( feet.rotation.x + feet_movement <= max_feet && feet.rotation.x  + feet_movement>= min_feet){
+        feet.rotation.x = feet.rotation.x + feet_movement ; 
+    }
+
+    if ( bottom.rotation.x + bottom_movement <= max_bottom && bottom.rotation.x  + bottom_movement>= min_bottom){
+        bottom.rotation.x = bottom.rotation.x + bottom_movement ; 
     }
 }
 
@@ -386,6 +403,18 @@ function onKeyDown(e) {
         case 70: // key F 
             head_movement = -Math.PI / 100;
             break;
+        case 81: // key Q
+            feet_movement = Math.PI / 100;
+            break;
+        case 65: // key A
+            feet_movement = -Math.PI / 100;
+            break;
+        case 87: // key W
+            bottom_movement = Math.PI / 100;
+            break;
+        case 83: // key S
+            bottom_movement = -Math.PI / 100;
+            break;
         default:
             break;
     }
@@ -400,6 +429,18 @@ function onKeyUp(e) {
             break;
         case 70: // key F 
             head_movement = 0;
+            break;
+        case 81: // key Q
+            feet_movement = 0;
+            break;
+        case 65: // key A
+            feet_movement = 0;
+            break;
+        case 87: // key W
+            bottom_movement = 0;
+            break;
+        case 83: // key S
+            bottom_movement = 0;
             break;
         default:
             break;
