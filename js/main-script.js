@@ -221,7 +221,7 @@ function createScene() {
     var reboque = new THREE.Object3D();
 
     // ---- CONTENTOR ----
-    var contentorGeometry = new THREE.BoxGeometry(30, 40, 70);
+    var contentorGeometry = new THREE.BoxGeometry(30, 40, 120);
     var contentor = new THREE.Mesh(contentorGeometry, whiteMaterial);
     contentor.position.set(0,-2.5,-100);
     reboque.add(contentor);
