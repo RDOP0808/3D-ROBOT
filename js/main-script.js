@@ -31,17 +31,17 @@ function createScene() {
     var fullhead = new THREE.Object3D();
 
     //head (cube)
-    var headGeometry = new THREE.BoxGeometry(80, 80, 80);
+    var headGeometry = new THREE.BoxGeometry(8, 8, 8);
     var head = new THREE.Mesh(headGeometry, blueMaterial);
-    head.position.set(0,115,0);
+    head.position.set(0,11.5,0);
     fullhead.add(head);
 
     //antenas (cylinder)
-    var antenasGeometry = new THREE.CylinderGeometry(10,10,70);
+    var antenasGeometry = new THREE.CylinderGeometry(1,1,7);
     var antenasR = new THREE.Mesh(antenasGeometry, redMaterial);
     var antenasL = new THREE.Mesh(antenasGeometry, redMaterial);
-    antenasR.position.set(-50,140,0);
-    antenasL.position.set(50,140,0);
+    antenasR.position.set(-5,14,0);
+    antenasL.position.set(5,14,0);
     fullhead.add(antenasR);
     fullhead.add(antenasL);
 
@@ -59,14 +59,14 @@ function createScene() {
     // ---- TRONCO ----
 
     // tronco (cube)
-    var troncoGeometry = new THREE.BoxGeometry(300, 150, 150);
+    var troncoGeometry = new THREE.BoxGeometry(30, 15, 15);
     var tronco = new THREE.Mesh(troncoGeometry, redMaterial);
     top.add(tronco);
 
     //abdomen (cube)
-    var abdomenGeometry = new THREE.BoxGeometry(150, 100, 150); //largura altura profundidade
+    var abdomenGeometry = new THREE.BoxGeometry(15, 10, 15); //largura altura profundidade
     var abdomen = new THREE.Mesh(abdomenGeometry, blueMaterial);
-    abdomen.position.set(0,-125,0);
+    abdomen.position.set(0,-12.5,0);
     top.add(abdomen);
 
     // ---- BRAÇOS ----
@@ -74,37 +74,37 @@ function createScene() {
     var fullArmL = new THREE.Object3D();
 
     //Right arm(cube)
-    var armGeometry = new THREE.BoxGeometry(100, 150, 150);
+    var armGeometry = new THREE.BoxGeometry(10, 15, 7.5);
     var armR = new THREE.Mesh(armGeometry, blueMaterial);
-    armR.position.set(-200,0,0); 
+    armR.position.set(-20,0,-3.75); 
     fullArmR.add(armR);
 
     //Right forearm (cube)
-    var forearmGeometry = new THREE.BoxGeometry(100, 100, 150);
+    var forearmGeometry = new THREE.BoxGeometry(10, 10, 15);
     var forearmR = new THREE.Mesh(forearmGeometry, redMaterial);
-    forearmR.position.set(-200,-125,0);
+    forearmR.position.set(-20,-12.5,0);
     fullArmR.add(forearmR)
 
     //Right tuboEscape (cylinder)
-    var tuboEscapeGeometry = new THREE.CylinderGeometry(25, 25, 150);
+    var tuboEscapeGeometry = new THREE.CylinderGeometry(2.5, 2.5, 15);
     var tuboEscapeR = new THREE.Mesh(tuboEscapeGeometry, redMaterial);
-    tuboEscapeR.position.set(-275,75,0);
+    tuboEscapeR.position.set(-27.5,7.5,-3.75);
     fullArmR.add(tuboEscapeR);
 
 
     //Left arm (cube)
     var armL = new THREE.Mesh(armGeometry, blueMaterial);
-    armL.position.set(200,0,0); 
+    armL.position.set(20,0,-3.75); 
     fullArmL.add(armL);
 
     //Left forearm (cube)
     var forearmL = new THREE.Mesh(forearmGeometry, redMaterial);
-    forearmL.position.set(200,-125,0);
+    forearmL.position.set(20,-12.5,0);
     fullArmL.add(forearmL);
 
     //Left tuboEscape (cylinder)
     var tuboEscapeL = new THREE.Mesh(tuboEscapeGeometry, redMaterial);
-    tuboEscapeL.position.set(275,75,0);
+    tuboEscapeL.position.set(27.5,7.5,-3.75);
     fullArmL.add(tuboEscapeL);
 
 
@@ -118,22 +118,22 @@ function createScene() {
     var fullWaist = new THREE.Object3D();
 
     //waist (cube)
-    var waistGeometry = new THREE.BoxGeometry(300, 100, 100);
+    var waistGeometry = new THREE.BoxGeometry(30, 10, 10);
     var waist = new THREE.Mesh(waistGeometry, blueMaterial);
-    waist.position.set(0,-225,0);
+    waist.position.set(0,-22.5,0);
     fullWaist.add(waist);
 
     //Right wheel (cylinder)
-    var wheelGeometry = new THREE.CylinderGeometry(50, 50, 50);
+    var wheelGeometry = new THREE.CylinderGeometry(5, 5, 5);
     var wheelR = new THREE.Mesh(wheelGeometry, redMaterial);
     wheelR.rotation.z = Math.PI / 2;
-    wheelR.position.set(-175,-225,0);
+    wheelR.position.set(-17.5,-22.5,0);
     fullWaist.add(wheelR);
 
     //Left wheel (cylinder)
     var wheelL = new THREE.Mesh(wheelGeometry, redMaterial);
     wheelL.rotation.z = Math.PI / 2;
-    wheelL.position.set(175,-225,0);
+    wheelL.position.set(17.5,-22.5,0);
     fullWaist.add(wheelL);
 
 
@@ -142,15 +142,15 @@ function createScene() {
     var fullLegL = new THREE.Object3D();
 
     //Right coxa (cube)
-    var coxaGeometry = new THREE.BoxGeometry(50, 200, 50);
+    var coxaGeometry = new THREE.BoxGeometry(5, 20, 5);
     var coxaR = new THREE.Mesh(coxaGeometry, redMaterial);
-    coxaR.position.set(-100,-375,0);
+    coxaR.position.set(-10,-37.5,0);
     fullLegR.add(coxaR);
 
     //Right perna (cube)
-    var pernaGeometry = new THREE.BoxGeometry(100, 200, 100);
+    var pernaGeometry = new THREE.BoxGeometry(10, 20, 10);
     var pernaR = new THREE.Mesh(pernaGeometry, blueMaterial);
-    pernaR.position.set(-100,-575,0);
+    pernaR.position.set(-10,-57.5,0);
     fullLegR.add(pernaR);
 
     //Right legWheelTopR (cylinder)
@@ -169,12 +169,12 @@ function createScene() {
 
     //Left coxa (cube)
     var coxaL = new THREE.Mesh(coxaGeometry, redMaterial);
-    coxaL.position.set(100,-375,0);
+    coxaL.position.set(10,-37.5,0);
     fullLegL.add(coxaL);
 
     //Left perna (cube)
     var pernaL = new THREE.Mesh(pernaGeometry, blueMaterial);
-    pernaL.position.set(100,-575,0);
+    pernaL.position.set(10,-57.5,0);
     fullLegL.add(pernaL);
 
     //Left legWheelTopL (cylinder)
@@ -194,14 +194,14 @@ function createScene() {
     // ---- PES ----
 
     //Right foot (cube)
-    var footGeometry = new THREE.BoxGeometry(150, 25, 125);
+    var footGeometry = new THREE.BoxGeometry(15, 2.5, 12.5);
     var footR = new THREE.Mesh(footGeometry, redMaterial);
-    footR.position.set(-100,-687.5,12.5);
+    footR.position.set(-10,-68.75,1.25);
     fullLegR.add(footR);
 
     //Left foot (cube)
     var footL = new THREE.Mesh(footGeometry, redMaterial);
-    footL.position.set(100,-687.5,12.5);
+    footL.position.set(10,-68.75,1.25);
     fullLegL.add(footL);
 
     //ADD TO BOTTOM
@@ -216,39 +216,44 @@ function createScene() {
 
 
     // ------------------------REBOQUE-----------------------------------
-    //var peca_ligacao;
     var reboque = new THREE.Object3D();
 
     // ---- CONTENTOR ----
-    var contentorGeometry = new THREE.BoxGeometry(500, 500, 1200);
+    var contentorGeometry = new THREE.BoxGeometry(50, 50, 120);
     var contentor = new THREE.Mesh(contentorGeometry, whiteMaterial);
-    contentor.position.set(0,-25,-1000);
+    contentor.position.set(0,-2.5,-100);
     reboque.add(contentor);
 
     // ---- RODAS ----
     var wheel1_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
-    wheel1_reboque.position.set(275,-275,-500);
+    wheel1_reboque.position.set(27.5,-27.5,-50);
     wheel1_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel1_reboque);
 
     var wheel2_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
-    wheel2_reboque.position.set(275,-275,-1500);
+    wheel2_reboque.position.set(27.5,-27.5,-150);
     wheel2_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel2_reboque);
 
     var wheel3_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
-    wheel3_reboque.position.set(-275,-275,-500);
+    wheel3_reboque.position.set(-27.5,-27.5,-50);
     wheel3_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel3_reboque);
 
     var wheel4_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
-    wheel4_reboque.position.set(-275,-275,-1500);
+    wheel4_reboque.position.set(-27.5,-27.5,-150);
     wheel4_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel4_reboque);
+
+    // ---- PEÇA DE LIGAÇÃO ----
+    var pecaligacaoGeometry = new THREE.BoxGeometry(10, 5, 10);
+    var pecaligacao = new THREE.Mesh(pecaligacaoGeometry, redMaterial);
+    pecaligacao.position.set(0,-25,-35);
+    reboque.add(pecaligacao);
     
     // ----------- POSICIONAR ROBOT E REBOQUE ----------------
-    robot.position.z += 700;
-    reboque.position.z += 700;
+    robot.position.z += 70;
+    reboque.position.z += 70;
     scene.add(robot);
     scene.add(reboque);
 }
@@ -257,32 +262,32 @@ function createScene() {
 function createCameras() {
     'use strict';
 
-    var viewSize = 2000 // Adjust this value based on the size of your scene
+    var viewSize = 200; // Adjust this value based on the size of your scene
     var aspectRatio = window.innerWidth / window.innerHeight;
 
     // Frontal camera 
-    cameraFrontal = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, 0.1, 1000);
-    cameraFrontal.position.set(0, 0, 1000);
+    cameraFrontal = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, -1000, 1000);
+    cameraFrontal.position.set(0, 0, 50);
     cameraFrontal.lookAt(scene.position);
 
     // Lateral camera
-    cameraLateral = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, 0.1, 1000);
-    cameraLateral.position.set(500, 0, 0);
+    cameraLateral = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, -1000, 1000);
+    cameraLateral.position.set(50, 0, 0);
     cameraLateral.lookAt(scene.position);
 
     // Topo camera
-    cameraTopo = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, 0.1, 1000);
-    cameraTopo.position.set(0, 500, 0);
+    cameraTopo = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, -1000, 1000);
+    cameraTopo.position.set(0, 50, 0);
     cameraTopo.lookAt(scene.position);
 
     // Orthogonal isometric camera
-    cameraOrtogonal = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, 0.1, 1000);
-    cameraOrtogonal.position.set(500, 500, 500);
+    cameraOrtogonal = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, -1000, 1000);
+    cameraOrtogonal.position.set(50, 50, 50);
     cameraOrtogonal.lookAt(scene.position);
 
     // Perspective isometric camera
-    cameraPerspectiva = new THREE.PerspectiveCamera(45,aspectRatio, 0.1, 1000);
-    cameraPerspectiva.position.set(500, 500, 500);
+    cameraPerspectiva = new THREE.PerspectiveCamera(45,viewSize, -1000, 1000);
+    cameraPerspectiva.position.set(50, 50, 50);
     cameraPerspectiva.lookAt(scene.position);
 
     // Set the initial active camera
