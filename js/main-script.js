@@ -45,6 +45,15 @@ function createScene() {
     fullhead.add(antenasR);
     fullhead.add(antenasL);
 
+    //Right olho (cube)
+    var olhoGeometry = new THREE.BoxGeometry(2,1,1);
+    var olhoR = new THREE.Mesh(olhoGeometry, redMaterial);
+    var olhoL = new THREE.Mesh(olhoGeometry, redMaterial);
+    olhoR.position.set(-50,140,0);
+    olhoL.position.set(50,140,0);
+    fullhead.add(olhoR);
+    fullhead.add(olhoL);
+
     top.add(fullhead);
 
     // ---- TRONCO ----
@@ -127,6 +136,7 @@ function createScene() {
     wheelL.position.set(175,-225,0);
     fullWaist.add(wheelL);
 
+
     // ---- PERNAS ----
     var fullLegR = new THREE.Object3D();
     var fullLegL = new THREE.Object3D();
@@ -143,6 +153,19 @@ function createScene() {
     pernaR.position.set(-100,-575,0);
     fullLegR.add(pernaR);
 
+    //Right legWheelTopR (cylinder)
+    var legWheelTopR = new THREE.Mesh(wheelGeometry, redMaterial);
+    legWheelTopR.rotation.z += 77;
+    legWheelTopR.position.set(-175,-525,0);
+    fullWaist.add(legWheelTopR);
+
+    //Right legWheelBottomR (cylinder)
+    var legWheelBottomR = new THREE.Mesh(wheelGeometry, redMaterial);
+    legWheelBottomR.rotation.z += 77;
+    legWheelBottomR.position.set(-175,-625,0);
+    fullWaist.add(legWheelBottomR);
+
+
 
     //Left coxa (cube)
     var coxaL = new THREE.Mesh(coxaGeometry, redMaterial);
@@ -153,6 +176,19 @@ function createScene() {
     var pernaL = new THREE.Mesh(pernaGeometry, blueMaterial);
     pernaL.position.set(100,-575,0);
     fullLegL.add(pernaL);
+
+    //Left legWheelTopL (cylinder)
+    var legWheelTopL = new THREE.Mesh(wheelGeometry, redMaterial);
+    legWheelTopL.rotation.z += 77;
+    legWheelTopL.position.set(175,-525,0);
+    fullWaist.add(legWheelTopL);
+
+    //Left legWheelBottomL (cylinder)
+    var legWheelBottomL = new THREE.Mesh(wheelGeometry, redMaterial);
+    legWheelBottomL.rotation.z += 77;
+    legWheelBottomL.position.set(175,-625,0);
+    fullWaist.add(legWheelBottomL);
+
 
 
     // ---- PES ----
