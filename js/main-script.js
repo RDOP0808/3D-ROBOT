@@ -46,11 +46,11 @@ function createScene() {
     fullhead.add(antenasL);
 
     //Right olho (cube)
-    var olhoGeometry = new THREE.BoxGeometry(2,1,1);
+    var olhoGeometry = new THREE.BoxGeometry(10,5,5);
     var olhoR = new THREE.Mesh(olhoGeometry, redMaterial);
     var olhoL = new THREE.Mesh(olhoGeometry, redMaterial);
-    olhoR.position.set(-50,140,0);
-    olhoL.position.set(50,140,0);
+    olhoR.position.set(-20,115,40);
+    olhoL.position.set(20,115,40);
     fullhead.add(olhoR);
     fullhead.add(olhoL);
 
@@ -155,13 +155,13 @@ function createScene() {
 
     //Right legWheelTopR (cylinder)
     var legWheelTopR = new THREE.Mesh(wheelGeometry, redMaterial);
-    legWheelTopR.rotation.z += 77;
+    legWheelTopR.rotation.z = Math.PI / 2;
     legWheelTopR.position.set(-175,-525,0);
     fullWaist.add(legWheelTopR);
 
     //Right legWheelBottomR (cylinder)
     var legWheelBottomR = new THREE.Mesh(wheelGeometry, redMaterial);
-    legWheelBottomR.rotation.z += 77;
+    legWheelBottomR.rotation.z = Math.PI / 2;
     legWheelBottomR.position.set(-175,-625,0);
     fullWaist.add(legWheelBottomR);
 
@@ -179,13 +179,13 @@ function createScene() {
 
     //Left legWheelTopL (cylinder)
     var legWheelTopL = new THREE.Mesh(wheelGeometry, redMaterial);
-    legWheelTopL.rotation.z += 77;
+    legWheelTopL.rotation.z = Math.PI / 2;
     legWheelTopL.position.set(175,-525,0);
     fullWaist.add(legWheelTopL);
 
     //Left legWheelBottomL (cylinder)
     var legWheelBottomL = new THREE.Mesh(wheelGeometry, redMaterial);
-    legWheelBottomL.rotation.z += 77;
+    legWheelBottomL.rotation.z = Math.PI / 2;
     legWheelBottomL.position.set(175,-625,0);
     fullWaist.add(legWheelBottomL);
 
