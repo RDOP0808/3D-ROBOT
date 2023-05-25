@@ -12,9 +12,7 @@ function createScene() {
     // Set the background color of the scene
     scene.background = new THREE.Color(0x78d6ff);
 
-    // Add scene elements, such as objects, lights, etc.
-
-    // Robot
+    // ------------------------ROBOT-----------------------------------
     var top, bottom;
 
     //head (sphere)
@@ -55,17 +53,21 @@ function createScene() {
     var forearmMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var forearm1 = new THREE.Mesh(forearmGeometry, forearmMaterial);
     forearm1.position.set(-200,0,-25);
+
     //forearm2 (cube)
     var forearm2 = new THREE.Mesh(forearmGeometry, forearmMaterial);
     forearm2.position.set(200,0,-25);
+
     //arm1 (cube)
     var armGeometry = new THREE.BoxGeometry(100, 100, 150);
     var armMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     var arm1 = new THREE.Mesh(armGeometry, armMaterial);
     arm1.position.set(-200,-125,0);
+
     //arm2 (cube)
     var arm2 = new THREE.Mesh(armGeometry, armMaterial);
     arm2.position.set(200,-125,0);
+
     //FAZERTUBOS DE ESCAPE E DPS ADD.(TUBOSDEESCAPE)
     fullArm1 = new THREE.Object3D();
     fullArm1.add(arm1);
@@ -138,33 +140,42 @@ function createScene() {
     scene.add(top);
     scene.add(bottom);
 
+
+
+    // ------------------------REBOQUE-----------------------------------
+    
+
 }
 
 /* CREATE CAMERA(S) */
 function createCameras() {
     'use strict';
-    // Frontal camera
-    cameraFrontal = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, 0.1, 1000);
+
+    var viewSize = 1000; // Adjust this value based on the size of your scene
+    var aspectRatio = window.innerWidth / window.innerHeight;
+
+    // Frontal camera 
+    cameraFrontal = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, 0.1, 1000);
     cameraFrontal.position.set(0, 0, 500);
     cameraFrontal.lookAt(scene.position);
 
     // Lateral camera
-    cameraLateral = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, 0.1, 1000);
+    cameraLateral = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, 0.1, 1000);
     cameraLateral.position.set(500, 0, 0);
     cameraLateral.lookAt(scene.position);
 
     // Topo camera
-    cameraTopo = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, 0.1, 1000);
+    cameraTopo = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, 0.1, 1000);
     cameraTopo.position.set(0, 500, 0);
     cameraTopo.lookAt(scene.position);
 
     // Orthogonal isometric camera
-    cameraOrtogonal = new THREE.OrthographicCamera(-500, 500, 500, -500, 0.1, 1000);
+    cameraOrtogonal = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, 0.1, 1000);
     cameraOrtogonal.position.set(500, 500, 500);
     cameraOrtogonal.lookAt(scene.position);
 
     // Perspective isometric camera
-    cameraPerspectiva = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    cameraPerspectiva = new THREE.PerspectiveCamera(45,aspectRatio, 0.1, 1000);
     cameraPerspectiva.position.set(500, 500, 500);
     cameraPerspectiva.lookAt(scene.position);
 
@@ -176,6 +187,7 @@ function createCameras() {
 function switchCamera(camera) {
     'use strict';
     activeCamera = camera;
+    activeCamera.updateProjectionMatrix();
 }
 
 /* UPDATE */
@@ -264,7 +276,7 @@ function onKeyDown(e) {
 }
 
 function toggleWireframe() {
-    // Toggle wireframe mode for all objects in the scene
+    // Toggle wireframe mode for all objects in the scene //MUDAR, GUARDAR ARRAY GLOBAL MATERIAIS, WIREFRAME TRUE
     scene.traverse(function (object) {
       if (object instanceof THREE.Mesh) {
         object.material.wireframe = !object.material.wireframe;
