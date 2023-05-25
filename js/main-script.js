@@ -14,12 +14,15 @@ function createScene() {
     // Set the background color of the scene
     scene.background = new THREE.Color(0x78d6ff);
 
-    // ------------------------ROBOT-----------------------------------//
-    var top, bottom;
+    // ------------------------ROBOT-----------------------------------
+    var robot = new THREE.Object3D();
+
     var blueMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var redMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
     materials.push(blueMaterial); // Add material to materials array
     materials.push(redMaterial); // Add material to materials array
+    materials.push(whiteMaterial); // Add material to materials array
 
     // ---- PARTE DE CIMA ----
     var top = new THREE.Object3D();
@@ -172,26 +175,46 @@ function createScene() {
     bottom.add(fullLegL);
     //BOTTOM COMPLETE
 
-   //add hierarchies (ou la como se escreve)
-    scene.add(top);
-    scene.add(bottom);
-
+    robot.add(top);
+    robot.add(bottom);
 
 
     // ------------------------REBOQUE-----------------------------------
-    //var weel_reboque;
     //var peca_ligacao;
-    /*
-    var contentorGeometry = new THREE.BoxGeometry(500, 500, 1000);
-    var contentorMaterial = new THREE.MeshBasicMaterial({ color: 0x0a4e6b });
-    var contentor = new THREE.Mesh(contentorGeometry, contentorMaterial);
-    contentor.position.set(0,-75,-700);
-
     var reboque = new THREE.Object3D();
-    reboque.add(contentor);
-    scene.add(reboque);
-    */
 
+    // ---- CONTENTOR ----
+    var contentorGeometry = new THREE.BoxGeometry(500, 500, 1200);
+    var contentor = new THREE.Mesh(contentorGeometry, whiteMaterial);
+    contentor.position.set(0,-25,-1000);
+    reboque.add(contentor);
+
+    // ---- RODAS ----
+    var wheel1_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
+    wheel1_reboque.position.set(275,-275,-500);
+    wheel1_reboque.rotation.z = Math.PI / 2;
+    reboque.add(wheel1_reboque);
+
+    var wheel2_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
+    wheel2_reboque.position.set(275,-275,-1500);
+    wheel2_reboque.rotation.z = Math.PI / 2;
+    reboque.add(wheel2_reboque);
+
+    var wheel3_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
+    wheel3_reboque.position.set(-275,-275,-500);
+    wheel3_reboque.rotation.z = Math.PI / 2;
+    reboque.add(wheel3_reboque);
+
+    var wheel4_reboque = new THREE.Mesh(wheelGeometry, redMaterial);
+    wheel4_reboque.position.set(-275,-275,-1500);
+    wheel4_reboque.rotation.z = Math.PI / 2;
+    reboque.add(wheel4_reboque);
+    
+    // ----------- POSICIONAR ROBOT E REBOQUE ----------------
+    robot.position.z += 700;
+    reboque.position.z += 700;
+    scene.add(robot);
+    scene.add(reboque);
 }
 
 /* CREATE CAMERA(S) */
@@ -203,7 +226,7 @@ function createCameras() {
 
     // Frontal camera 
     cameraFrontal = new THREE.OrthographicCamera((-aspectRatio * viewSize) / 2, (aspectRatio * viewSize) / 2, viewSize / 2, -viewSize / 2, 0.1, 1000);
-    cameraFrontal.position.set(0, 0, 500);
+    cameraFrontal.position.set(0, 0, 1000);
     cameraFrontal.lookAt(scene.position);
 
     // Lateral camera
