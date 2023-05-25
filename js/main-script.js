@@ -15,12 +15,13 @@ function createScene() {
     // ------------------------ROBOT-----------------------------------
     var top, bottom;
 
-    //head (sphere)
+    //head (cube)
     var headGeometry = new THREE.BoxGeometry(80, 80, 80);
     var headMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var head = new THREE.Mesh(headGeometry, headMaterial);
     head.position.set(0,125,0);
-    //ADICIONAR ANTENAS
+    
+    //antenas (cylinder)
     var antenasGeometry = new THREE.CylinderGeometry(10,10,70);
     var antenasMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     var antenas1 = new THREE.Mesh(antenasGeometry, antenasMaterial);
@@ -28,53 +29,67 @@ function createScene() {
     antenas1.position.set(50,140,0);
     antenas2.position.set(-50,140,0);
 
+    // tronco (cube)
+    var troncoGeometry = new THREE.BoxGeometry(300, 150, 150);
+    var troncoMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var tronco = new THREE.Mesh(troncoGeometry, troncoMaterial);
+
     //abdomen (cube)
-    var abdomenGeometry = new THREE.BoxGeometry(100, 50, 100); //largura altura profundidade
+    var abdomenGeometry = new THREE.BoxGeometry(150, 150, 50); //largura altura profundidade
     var abdomenMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var abdomen = new THREE.Mesh(abdomenGeometry, abdomenMaterial);
     abdomen.position.set(0,-125,0);
-
-    // torso (Cube)
-    var torsoGeometry = new THREE.BoxGeometry(300, 150, 150);
-    var torsoMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    var torso = new THREE.Mesh(torsoGeometry, torsoMaterial);
 
     //ADD TO TOP
     var top = new THREE.Object3D();
     top.add(head);
     top.add(antenas1);
     top.add(antenas2);
+    top.add(tronco);
     top.add(abdomen);
-    top.add(torso);
+    
 
     var fullArm1, fullArm2;
-    //forearm1 (cube)
-    var forearmGeometry = new THREE.BoxGeometry(100, 150, 100);
-    var forearmMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-    var forearm1 = new THREE.Mesh(forearmGeometry, forearmMaterial);
-    forearm1.position.set(-200,0,-25);
-
-    //forearm2 (cube)
-    var forearm2 = new THREE.Mesh(forearmGeometry, forearmMaterial);
-    forearm2.position.set(200,0,-25);
-
     //arm1 (cube)
-    var armGeometry = new THREE.BoxGeometry(100, 100, 150);
-    var armMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var armGeometry = new THREE.BoxGeometry(100, 150, 100);
+    var armMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
     var arm1 = new THREE.Mesh(armGeometry, armMaterial);
-    arm1.position.set(-200,-125,0);
-
+    arm1.position.set(-200,0,-25);
     //arm2 (cube)
     var arm2 = new THREE.Mesh(armGeometry, armMaterial);
-    arm2.position.set(200,-125,0);
+    arm2.position.set(200,0,-25); 
 
-    //FAZERTUBOS DE ESCAPE E DPS ADD.(TUBOSDEESCAPE)
+    //forearm1 (cube)
+    var forearmGeometry = new THREE.BoxGeometry(100, 100, 150);
+    var forearmMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var forearm1 = new THREE.Mesh(forearmGeometry, forearmMaterial);
+    forearm1.position.set(-200,-125,0);
+    //forearm2 (cube)
+    var forearm2 = new THREE.Mesh(forearmGeometry, forearmMaterial);
+    forearm2.position.set(200,-125,0);
+
+    //tuboEscape1 (cylinder)
+    var tuboEscapeGeometry = new THREE.CylinderGeometry(50, 50, 100);
+    var tuboEscapeMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var tuboEscape1 = new THREE.Mesh(tuboEscapeGeometry, tuboEscapeMaterial);
+    tuboEscape1.position.set(-300,-125,-25);
+
+    //tuboEscape2 (cylinder)
+    var tuboEscapeGeometry = new THREE.CylinderGeometry(50, 50, 100);
+    var tuboEscapeMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    var tuboEscape2 = new THREE.Mesh(tuboEscapeGeometry, tuboEscapeMaterial);
+    tuboEscape2.position.set(300,-125,-25);
+
     fullArm1 = new THREE.Object3D();
+    fullArm2 = new THREE.Object3D();
+
     fullArm1.add(arm1);
     fullArm1.add(forearm1);
-    fullArm2 = new THREE.Object3D();
+    fullArm1.add(tuboEscape1);
+    
     fullArm2.add(arm2);
     fullArm2.add(forearm2);
+    fullArm2.add(tuboEscape2);
 
     //ADD TO TOP
     top.add(fullArm1);
@@ -270,6 +285,33 @@ function onKeyDown(e) {
         case 54: // Numeric key 6
             toggleWireframe();
             break;
+        case 81: // Letter key Q
+            if(keydown = 81){ //while ou if?? pq supostamente só mexe enquanto estamos a pressionar
+                 //();
+            }
+           
+            break;
+        case 65: // Letter key A
+            //();
+            break;
+        case 87: // Letter key W
+            //();
+            break;
+        case 83: // Letter key S
+            //();
+            break;
+        case 69: // Letter key E
+            //();
+            break;
+        case 68: // Letter key D
+            //();
+            break;
+        case 82: // Letter key R
+            //();
+            break;
+        case 70: // Letter key F
+            //();
+            break;
         default:
             break;
     }
@@ -279,7 +321,7 @@ function toggleWireframe() {
     // Toggle wireframe mode for all objects in the scene //MUDAR, GUARDAR ARRAY GLOBAL MATERIAIS, WIREFRAME TRUE
     scene.traverse(function (object) {
       if (object instanceof THREE.Mesh) {
-        object.material.wireframe = !object.material.wireframe;
+        object.material.wireframe = true;
       }
     });
   }
