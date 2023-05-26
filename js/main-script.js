@@ -353,15 +353,21 @@ function update_robot(delta){
     var max_feet=Math.PI + 0.01;
     var min_bottom=0;
     var max_bottom=Math.PI/2;
+    var max_arms_distance = 20;
+    var min_arms_distance = 10;
 
     // ---ARMS---
-    if (moveArmsL) {
-        fullArmL.translateX(-speed * delta);
-        fullArmR.translateX(speed * delta);
+    if (fullArmR.position.x + (speed * delta) <= max_arms_distance){
+        if (moveArmsL) {
+            fullArmL.translateX(-speed * delta);
+            fullArmR.translateX(speed * delta);
+        }
     }
-    if (moveArmsR) {
-        fullArmL.translateX(speed * delta);
-        fullArmR.translateX(-speed * delta);
+    if (fullArmR.position.x - (speed * delta) >= min_arms_distance){
+        if (moveArmsR) {
+            fullArmL.translateX(speed * delta);
+            fullArmR.translateX(-speed * delta);
+        }
     }
     // ---BOTTOM---
     if ( current_bottom_rotation - ( speedR*delta )>= min_bottom ){
@@ -509,6 +515,12 @@ function onKeyDown(e) {
         case 40: // Down arrow key
             moveBackward = true;
             break;
+        case 69: // key E
+            moveArmsL = true;
+            break;
+        case 68: // key D
+            moveArmsR = true;
+            break;
         default:
             break;
     }
@@ -547,6 +559,12 @@ function onKeyUp(e) {
             break;
         case 40: // Down arrow key
             moveBackward = false;
+            break;
+        case 69: // key E
+            moveArmsL = false;
+            break;
+        case 68: // key D
+            moveArmsR = false;
             break;
         default:
             break;
