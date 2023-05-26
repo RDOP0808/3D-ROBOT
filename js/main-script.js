@@ -262,14 +262,14 @@ function createScene() {
     reboque.add(contentor);
 
     // ---- BASE ----
-    var baseGeometry = new THREE.BoxGeometry(30, 5, 45);
+    var baseGeometry = new THREE.BoxGeometry(30, 5, 35);
     var base = new THREE.Mesh(baseGeometry, redMaterial);
-    base.position.set(0,-21,-95);
+    base.position.set(0,-21,-100);
     reboque.add(base);
 
     // ---- RODAS ----
     var wheel1_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
-    wheel1_reboque.position.set(17.5,-22.5,-80);
+    wheel1_reboque.position.set(17.5,-22.5,-90);
     wheel1_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel1_reboque);
 
@@ -279,7 +279,7 @@ function createScene() {
     reboque.add(wheel2_reboque);
 
     var wheel3_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
-    wheel3_reboque.position.set(-17.5,-22.5,-80);
+    wheel3_reboque.position.set(-17.5,-22.5,-90);
     wheel3_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel3_reboque);
 
