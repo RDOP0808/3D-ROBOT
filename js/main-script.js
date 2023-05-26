@@ -204,13 +204,13 @@ function createScene() {
     // ---- PES ----
 
     //Right foot (cube)
-    var footGeometry = new THREE.BoxGeometry(10, 2.5, 7.5);
+    var footGeometry = new THREE.BoxGeometry(10, 2.5, 15);
     var footR = new THREE.Mesh(footGeometry, redMaterial);
-    footR.position.set(-10,0,7.5);
+    footR.position.set(-10,0,3.25);
 
     //Left foot (cube)
     var footL = new THREE.Mesh(footGeometry, redMaterial);
-    footL.position.set(10,0,7.5);
+    footL.position.set(10,0,3.25);
 
     feet.add(footR);
     feet.add(footL);
