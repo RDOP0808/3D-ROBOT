@@ -157,7 +157,7 @@ function createScene() {
     var fullWaist = new THREE.Object3D();
 
     //waist (cube)
-    var waistGeometry = new THREE.BoxGeometry(30, 10, 7);
+    var waistGeometry = new THREE.BoxGeometry(30, 10, 10);
     var waist = new THREE.Mesh(waistGeometry, blueMaterial);
     waist.position.set(0,0,0);
     fullWaist.add(waist);
@@ -240,7 +240,7 @@ function createScene() {
 
     feet.add(footR);
     feet.add(footL);
-    feet.position.set(0,-48.75,0);
+    feet.position.set(0,-48.75,-2.5);
     
     fullLeg.add(feet);
     //ADD TO BOTTOM
@@ -258,34 +258,40 @@ function createScene() {
     // ---- CONTENTOR ----
     var contentorGeometry = new THREE.BoxGeometry(30, 40, 80);
     var contentor = new THREE.Mesh(contentorGeometry, whiteMaterial);
-    contentor.position.set(0,-2.5,-80);
+    contentor.position.set(0,1,-80);
     reboque.add(contentor);
+
+    // ---- BASE ----
+    var baseGeometry = new THREE.BoxGeometry(30, 5, 45);
+    var base = new THREE.Mesh(baseGeometry, redMaterial);
+    base.position.set(0,-21,-95);
+    reboque.add(base);
 
     // ---- RODAS ----
     var wheel1_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
-    wheel1_reboque.position.set(17.5,-22.5,-50);
+    wheel1_reboque.position.set(17.5,-22.5,-80);
     wheel1_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel1_reboque);
 
     var wheel2_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
-    wheel2_reboque.position.set(17.5,-22.5,-100);
+    wheel2_reboque.position.set(17.5,-22.5,-110);
     wheel2_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel2_reboque);
 
     var wheel3_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
-    wheel3_reboque.position.set(-17.5,-22.5,-50);
+    wheel3_reboque.position.set(-17.5,-22.5,-80);
     wheel3_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel3_reboque);
 
     var wheel4_reboque = new THREE.Mesh(wheelGeometry, blackMaterial);
-    wheel4_reboque.position.set(-17.5,-22.5,-100);
+    wheel4_reboque.position.set(-17.5,-22.5,-110);
     wheel4_reboque.rotation.z = Math.PI / 2;
     reboque.add(wheel4_reboque);
 
     // ---- PEÇA DE LIGAÇÃO ----
     var pecaligacaoGeometry = new THREE.BoxGeometry(10, 5, 10);
     var pecaligacao = new THREE.Mesh(pecaligacaoGeometry, redMaterial);
-    pecaligacao.position.set(0,-20,-35);
+    pecaligacao.position.set(0,-16.5,-35);
     reboque.add(pecaligacao);
     
     // ----------- POSICIONAR ROBOT E REBOQUE ----------------
@@ -348,9 +354,9 @@ function update() {
 
 function update_robot(delta){
     var min_head=0
-    var max_head=Math.PI+0.001;
+    var max_head=Math.PI;
     var min_feet=-0.01;
-    var max_feet=Math.PI + 0.01;
+    var max_feet=Math.PI / 2;
     var min_bottom=0;
     var max_bottom=Math.PI/2;
     var max_arms_distance = 20;
