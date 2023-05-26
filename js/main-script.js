@@ -40,31 +40,18 @@ var current_head_rotation = 0;
 // ------ AABB CLASS -------- //
 class AABB {
     constructor(x, y, z, width, height, depth) {
-      this.x = x;
-      this.y = y;
-      this.z = z;
-      this.width = width;
-      this.height = height;
-      this.depth = depth;
-    }
-
-    // Check if two AABBs are in collision
-    inCollision(other) {
-      return (
-        this.x < other.x + other.width &&
-        this.x + this.width > other.x &&
-        this.y < other.y + other.height &&
-        this.y + this.height > other.y &&
-        this.z < other.z + other.depth &&
-        this.z + this.depth > other.z 
-      );
+      this.min = new THREE.Vector3(x-(width/2), y-(height/2), z-(depth/2));
+      this.max = new THREE.Vector3(x+(width/2), y+(height/2), z+(depth/2));
     }
 }
-  
-// Generate two AABBs
-const camiaoAABB = new AABB(25, 0, 0, 30, 42.5, 90); // (x,y,z) is the ponto on the front in the lower right
-const reboqueAABB = new AABB(25, 0, 80, 40, 42.5, 60);
-var finalPosition = (25, 0, 2.5) // posicao do ponto final 
+
+//Initialize AABBs
+var robotAABB;
+var  reboqueAABB;
+
+//Accoplated reboque position
+var finalPosition = new THREE.Vector3(0, 0, -45);
+var finalPositionActivated = false;
   
 
 /* CREATE SCENE(S) */
@@ -186,7 +173,7 @@ function createScene() {
     fullWaist.add(waist);
 
     //Right wheel (cylinder)
-    var wheelGeometry = new THREE.CylinderGeometry(5, 5, 5, 10);
+    var wheelGeometry = new THREE.CylinderGeometry(6, 6, 6, 10);
     var wheelR = new THREE.Mesh(wheelGeometry, blackMaterial);
     wheelR.rotation.z = Math.PI / 2;
     wheelR.position.set(-17.5,0,0);
@@ -275,6 +262,7 @@ function createScene() {
     robot.add(top);
     robot.add(bottom);
 
+    
 
     // ------------------------REBOQUE-----------------------------------
 
@@ -322,7 +310,11 @@ function createScene() {
     reboque.position.z += 50;
     scene.add(robot);
     scene.add(reboque);
+    
+    
 }
+
+
 
 /* CREATE CAMERA(S) */
 function createCameras() {
@@ -370,11 +362,23 @@ function switchCamera(camera) {
 
 /*CHECK COLLISIONS*/
 function checkCollisions(){
-    if(reboqueAABB.inCollision(camiaoAABB)){
-        console.log("aconteceu colisao");
-        //reboque.position.set(25,0,2.5);
-    }
-    //if(verifica se o vetor esta perto do sitio certo)
+    console.log("check");
+
+    //Generate AABB for camiao 
+    camiaoAABB = new AABB(0, 0, 0, 32, 47.5, 55);
+    //Generate AABB for reboque
+    reboqueAABB = new AABB(reboque.position.x, 0, reboque.position.z, 30, 40, 90);
+    console.log(reboqueAABB)
+    return !(camiaoAABB.max.x < reboqueAABB.min.x || camiaoAABB.min.x > reboqueAABB.max.x 
+        || camiaoAABB.max.z < reboqueAABB.min.z || camiaoAABB.min.z > reboqueAABB.max.z);
+    //GO TO HANDLE
+}
+
+/*HANDLE COLLISIONS*/
+function handleCollisions(){
+    console.log("aconteceu colisao");
+    finalPositionActivated = true;
+    //UPDATES TO ACCOPLATED REBOQUE POSITION
 }
 
 /* UPDATE */
@@ -383,6 +387,9 @@ function update() {
     var delta = clock.getDelta();
     update_robot(delta);
     update_reboque(delta);
+    if (checkCollisions()){
+        handleCollisions();
+    }
 }
 
 function update_robot(delta){
@@ -464,7 +471,7 @@ function update_robot(delta){
     fullhead.rotateX(movement_head.x);
 }
 
-function update_reboque(delta){
+function update_reboque(delta, finalPositionActivated){
     // Update box position based on movement
     var movement_reboque = new THREE.Vector3(0,0,0);
     if (moveForward) {
@@ -483,6 +490,19 @@ function update_reboque(delta){
     reboque.translateX(movement_reboque.x);
     reboque.translateZ(movement_reboque.z);
 
+
+    //Collision happened
+    if(finalPositionActivated){
+        console.log("final pos activated")
+        movement_reboque.x = finalPosition.x;
+        movement_reboque.z = finalPosition.z;
+
+        reboque.translateX(movement_reboque.x);
+        reboque.translateZ(movement_reboque.z);
+        
+
+        finalPositionActivated = false;
+    } 
 }
 
 /* RENDER */
