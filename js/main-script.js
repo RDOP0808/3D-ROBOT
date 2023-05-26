@@ -37,12 +37,6 @@ var current_bottom_rotation = 0;
 var current_feet_rotation = 0;
 var current_head_rotation = 0;
 
-/*var head_movement = 0 ;
-var feet_movement = 0;
-var bottom_movement = 0;
-
-var reboquePosition = new THREE.Vector3(0, 0, 0);
-var reboqueSpeed = 5;*/
 
 /* CREATE SCENE(S) */
 function createScene() {
@@ -416,18 +410,23 @@ function update_robot(delta){
 
 function update_reboque(delta){
     // Update box position based on movement
+    var movement_reboque = new THREE.Vector3(0,0,0);
     if (moveForward) {
-        reboque.translateZ(-speed * delta);
+        movement_reboque.z -= speed * delta;
     }
     if (moveBackward) {
-        reboque.translateZ(speed * delta);
+        movement_reboque.z += speed * delta;
     }
     if (moveLeft){
-        reboque.translateX(-speed * delta);
+        movement_reboque.x -= speed * delta;
     }
     if (moveRight){
-        reboque.translateX(speed * delta);
+        movement_reboque.x += speed * delta;
     }
+
+    reboque.translateX(movement_reboque.x);
+    reboque.translateZ(movement_reboque.z);
+
 }
 
 /* RENDER */
