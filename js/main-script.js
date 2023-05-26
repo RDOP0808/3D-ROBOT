@@ -9,12 +9,16 @@ var materials = []; // Array to store materials
 // Set up movement variables
 var clock = new THREE.Clock();
 var speed = 10;
+var speedR = 1;
 var velocity = new THREE.Vector3();
+var delta = 0;
 
 var fullhead = new THREE.Object3D();
 var feet = new THREE.Object3D();
 var bottom = new THREE.Object3D();
 var reboque = new THREE.Object3D();
+var fullArmR = new THREE.Object3D();
+var fullArmL = new THREE.Object3D();
 
 var moveForward = false;
 var moveBackward = false;
@@ -29,7 +33,9 @@ var moveBottomL = false;
 var moveFeetR = false;
 var moveFeetL = false;
 
-
+var current_bottom_rotation = 0;
+var current_feet_rotation = 0;
+var current_head_rotation = 0;
 
 /*var head_movement = 0 ;
 var feet_movement = 0;
@@ -103,41 +109,41 @@ function createScene() {
     top.add(abdomen);
 
     // ---- BRAÇOS ----
-    var fullArmR = new THREE.Object3D();
-    var fullArmL = new THREE.Object3D();
+    fullArmL.position.set(-20,0,0);
+    fullArmR.position.set(20,0,0);
 
     //Right arm(cube)
     var armGeometry = new THREE.BoxGeometry(10, 15, 7.5);
     var armR = new THREE.Mesh(armGeometry, blueMaterial);
-    armR.position.set(-20,0,-3.75); 
+    armR.position.set(0,0,-3.75); 
     fullArmR.add(armR);
 
     //Right forearm (cube)
     var forearmGeometry = new THREE.BoxGeometry(10, 10, 15);
     var forearmR = new THREE.Mesh(forearmGeometry, redMaterial);
-    forearmR.position.set(-20,-12.5,0);
+    forearmR.position.set(0,-12.5,0);
     fullArmR.add(forearmR)
 
     //Right tuboEscape (cylinder)
     var tuboEscapeGeometry = new THREE.CylinderGeometry(2.5, 2.5, 15);
     var tuboEscapeR = new THREE.Mesh(tuboEscapeGeometry, redMaterial);
-    tuboEscapeR.position.set(-27.5,7.5,-3.75);
+    tuboEscapeR.position.set(7.5,7.5,-3.75);
     fullArmR.add(tuboEscapeR);
 
 
     //Left arm (cube)
     var armL = new THREE.Mesh(armGeometry, blueMaterial);
-    armL.position.set(20,0,-3.75); 
+    armL.position.set(0,0,-3.75); 
     fullArmL.add(armL);
 
     //Left forearm (cube)
     var forearmL = new THREE.Mesh(forearmGeometry, redMaterial);
-    forearmL.position.set(20,-12.5,0);
+    forearmL.position.set(0,-12.5,0);
     fullArmL.add(forearmL);
 
     //Left tuboEscape (cylinder)
     var tuboEscapeL = new THREE.Mesh(tuboEscapeGeometry, redMaterial);
-    tuboEscapeL.position.set(27.5,7.5,-3.75);
+    tuboEscapeL.position.set(-7.5,7.5,-3.75);
     fullArmL.add(tuboEscapeL);
 
 
@@ -335,22 +341,68 @@ function switchCamera(camera) {
 /* UPDATE */
 function update() {
     'use strict';
-    update_robot();
-    update_reboque();
+    var delta = clock.getDelta();
+    update_robot(delta);
+    update_reboque(delta);
 }
 
-function update_robot(){
+function update_robot(delta){
     var min_head=0
-    var max_head=Math.PI;
+    var max_head=Math.PI+0.001;
     var min_feet=-0.01;
     var max_feet=Math.PI + 0.01;
-    var min_bottom=-0.01;
-    var max_bottom=Math.PI/2 + 0.01;
+    var min_bottom=0;
+    var max_bottom=Math.PI/2;
+
+    // ---ARMS---
+    if (moveArmsL) {
+        fullArmL.translateX(-speed * delta);
+        fullArmR.translateX(speed * delta);
+    }
+    if (moveArmsR) {
+        fullArmL.translateX(speed * delta);
+        fullArmR.translateX(-speed * delta);
+    }
+    // ---BOTTOM---
+    if ( current_bottom_rotation - ( speedR*delta )>= min_bottom ){
+        if (moveBottomR){
+            bottom.rotateX(-speedR * delta);
+            current_bottom_rotation -= speedR * delta;
+        }
+    }
+    if (current_bottom_rotation + ( speedR*delta )<=max_bottom){
+        if (moveBottomL){
+        bottom.rotateX(speedR * delta);
+        current_bottom_rotation += speedR * delta;
+    }}
+    // ---FEET---
+    if ( current_feet_rotation - ( speedR*delta )>= min_feet ){
+        if (moveFeetR){
+            feet.rotateX(-speedR * delta);
+            current_feet_rotation -= speedR * delta;
+        }
+    }
+    if (current_feet_rotation + ( speedR*delta )<=max_feet){
+        if (moveFeetL){
+            feet.rotateX(speedR * delta);
+            current_feet_rotation += speedR * delta;
+    }}
+    // ---HEAD---
+    if ( current_head_rotation - ( speedR*delta )>= min_head ){
+        if (moveHeadR){
+            fullhead.rotateX(-speedR * delta);
+            current_head_rotation -= speedR * delta;
+        }
+    }
+    if (current_head_rotation + ( speedR*delta )<=max_head){
+        if (moveHeadL){
+            fullhead.rotateX(speedR * delta);
+            current_head_rotation += speedR * delta;
+    }}
+    
 }
 
-function update_reboque(){
-    var delta = clock.getDelta();
-  
+function update_reboque(delta){
     // Update box position based on movement
     if (moveForward) {
         reboque.translateZ(-speed * delta);
