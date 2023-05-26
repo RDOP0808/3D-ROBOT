@@ -9,10 +9,14 @@ var materials = []; // Array to store materials
 var fullhead = new THREE.Object3D();
 var feet = new THREE.Object3D();
 var bottom = new THREE.Object3D();
+var reboque = new THREE.Object3D();
 
 var head_movement = 0 ;
 var feet_movement = 0;
 var bottom_movement = 0;
+
+var reboquePosition = new THREE.Vector3(0, 0, 0);
+var reboqueSpeed = 5;
 
 /* CREATE SCENE(S) */
 function createScene() {
@@ -224,7 +228,6 @@ function createScene() {
 
 
     // ------------------------REBOQUE-----------------------------------
-    var reboque = new THREE.Object3D();
 
     // ---- CONTENTOR ----
     var contentorGeometry = new THREE.BoxGeometry(30, 40, 80);
@@ -313,6 +316,7 @@ function switchCamera(camera) {
 function update() {
     'use strict';
     update_robot();
+    update_reboque();
 }
 
 function update_robot(){
@@ -322,7 +326,7 @@ function update_robot(){
     var max_feet=Math.PI + 0.01;
     var min_bottom=-0.01;
     var max_bottom=Math.PI/2 + 0.01;
-
+    
     if ( fullhead.rotation.x + head_movement <= max_head && fullhead.rotation.x  + head_movement>= min_head){
         fullhead.rotation.x = fullhead.rotation.x + head_movement ; 
     }
@@ -334,6 +338,10 @@ function update_robot(){
     if ( bottom.rotation.x + bottom_movement <= max_bottom && bottom.rotation.x  + bottom_movement>= min_bottom){
         bottom.rotation.x = bottom.rotation.x + bottom_movement ; 
     }
+}
+
+function update_reboque(){
+    reboque.position.copy(reboquePosition);
 }
 
 /* RENDER */
@@ -414,6 +422,18 @@ function onKeyDown(e) {
             break;
         case 83: // key S
             bottom_movement = -Math.PI / 100;
+            break;
+        case 37: // Left arrow key
+            reboquePosition.x -= reboqueSpeed;
+            break;
+        case 38: // Up arrow key
+            reboquePosition.z -= reboqueSpeed;
+            break;
+        case 39: // Right arrow key
+            reboquePosition.x += reboqueSpeed;
+            break;
+        case 40: // Down arrow key
+            reboquePosition.z += reboqueSpeed;
             break;
         default:
             break;
