@@ -37,36 +37,12 @@ var current_bottom_rotation = 0;
 var current_feet_rotation = 0;
 var current_head_rotation = 0;
 
-// ------ AABB CLASS -------- //
-/*class AABB {
-    constructor(x, y, z, width, height, depth) {
-      this.x = x;
-      this.y = y;
-      this.z = z;
-      this.width = width;
-      this.height = height;
-      this.depth = depth;
-    }
-  
-    // Check if two AABBs are in collision
-    inCollision(other) {
-      return (
-        this.x < other.x + other.width &&
-        this.x + this.width > other.x &&
-        this.y < other.y + other.height &&
-        this.y + this.height > other.y &&
-        this.z < other.z + other.depth &&
-        this.z + this.depth > other.z
-      );
-    }
-}
-  
-// Generate two AABBs
-const camiaoAABB = new AABB(0, 0, 0, 10, 10, 10);
-const reboqueAABB = new AABB(5, 5, 5, 10, 10, 10);
-  
+/*var head_movement = 0 ;
+var feet_movement = 0;
+var bottom_movement = 0;
 
-
+var reboquePosition = new THREE.Vector3(0, 0, 0);
+var reboqueSpeed = 5;*/
 
 /* CREATE SCENE(S) */
 function createScene() {
@@ -362,21 +338,12 @@ function switchCamera(camera) {
     activeCamera.updateProjectionMatrix();
 }
 
-
-/*CHECK COLLISIONS
-function checkCollisions(){
-    if(reboqueAABB.inCollision(camiaoAABB)){
-        //reboque.position.z += 500;
-    } 
-}*/
-
 /* UPDATE */
 function update() {
     'use strict';
     var delta = clock.getDelta();
     update_robot(delta);
     update_reboque(delta);
-    //checkCollisions();
 }
 
 function update_robot(delta){
@@ -386,7 +353,9 @@ function update_robot(delta){
     var max_feet=Math.PI + 0.01;
     var min_bottom=0;
     var max_bottom=Math.PI/2;
-    
+    var max_arms_distance = 20;
+    var min_arms_distance = 10;
+
     // ---ARMS---
     if (fullArmR.position.x + (speed * delta) <= max_arms_distance){
         if (moveArmsL) {
@@ -429,15 +398,15 @@ function update_robot(delta){
         if (moveHeadR){
             fullhead.rotateX(-speedR * delta);
             current_head_rotation -= speedR * delta;
-    }
+        }
     }
     if (current_head_rotation + ( speedR*delta )<=max_head){
         if (moveHeadL){
             fullhead.rotateX(speedR * delta);
             current_head_rotation += speedR * delta;
     }}
-
-    }
+    
+}
 
 function update_reboque(delta){
     // Update box position based on movement
@@ -446,7 +415,7 @@ function update_reboque(delta){
     }
     if (moveBackward) {
         reboque.translateZ(speed * delta);
-}
+    }
     if (moveLeft){
         reboque.translateX(-speed * delta);
     }
