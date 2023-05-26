@@ -37,6 +37,35 @@ var current_bottom_rotation = 0;
 var current_feet_rotation = 0;
 var current_head_rotation = 0;
 
+// ------ AABB CLASS -------- //
+class AABB {
+    constructor(x, y, z, width, height, depth) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+      this.width = width;
+      this.height = height;
+      this.depth = depth;
+    }
+
+    // Check if two AABBs are in collision
+    inCollision(other) {
+      return (
+        this.x < other.x + other.width &&
+        this.x + this.width > other.x &&
+        this.y < other.y + other.height &&
+        this.y + this.height > other.y &&
+        this.z < other.z + other.depth &&
+        this.z + this.depth > other.z 
+      );
+    }
+}
+  
+// Generate two AABBs
+const camiaoAABB = new AABB(25, 0, 0, 30, 42.5, 90); // (x,y,z) is the ponto on the front in the lower right
+const reboqueAABB = new AABB(25, 0, 80, 40, 42.5, 60);
+var finalPosition = (25, 0, 2.5) // posicao do ponto final 
+  
 
 /* CREATE SCENE(S) */
 function createScene() {
@@ -336,6 +365,16 @@ function switchCamera(camera) {
     'use strict';
     activeCamera = camera;
     activeCamera.updateProjectionMatrix();
+}
+
+
+/*CHECK COLLISIONS*/
+function checkCollisions(){
+    if(reboqueAABB.inCollision(camiaoAABB)){
+        console.log("aconteceu colisao");
+        //reboque.position.set(25,0,2.5);
+    }
+    //if(verifica se o vetor esta perto do sitio certo)
 }
 
 /* UPDATE */
