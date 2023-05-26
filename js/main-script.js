@@ -6,17 +6,37 @@ activeCamera;
 
 var materials = []; // Array to store materials
 
+// Set up movement variables
+var clock = new THREE.Clock();
+var speed = 10;
+var velocity = new THREE.Vector3();
+
 var fullhead = new THREE.Object3D();
 var feet = new THREE.Object3D();
 var bottom = new THREE.Object3D();
 var reboque = new THREE.Object3D();
 
-var head_movement = 0 ;
+var moveForward = false;
+var moveBackward = false;
+var moveLeft = false;
+var moveRight = false;
+var moveArmsR = false;
+var moveArmsL = false;
+var moveHeadR = false;
+var moveHeadL = false;
+var moveBottomR = false;
+var moveBottomL = false;
+var moveFeetR = false;
+var moveFeetL = false;
+
+
+
+/*var head_movement = 0 ;
 var feet_movement = 0;
 var bottom_movement = 0;
 
 var reboquePosition = new THREE.Vector3(0, 0, 0);
-var reboqueSpeed = 5;
+var reboqueSpeed = 5;*/
 
 /* CREATE SCENE(S) */
 function createScene() {
@@ -320,28 +340,30 @@ function update() {
 }
 
 function update_robot(){
-    var min_head=0;
+    var min_head=0
     var max_head=Math.PI;
     var min_feet=-0.01;
     var max_feet=Math.PI + 0.01;
     var min_bottom=-0.01;
     var max_bottom=Math.PI/2 + 0.01;
-    
-    if ( fullhead.rotation.x + head_movement <= max_head && fullhead.rotation.x  + head_movement>= min_head){
-        fullhead.rotation.x = fullhead.rotation.x + head_movement ; 
-    }
-
-    if ( feet.rotation.x + feet_movement <= max_feet && feet.rotation.x  + feet_movement>= min_feet){
-        feet.rotation.x = feet.rotation.x + feet_movement ; 
-    }
-
-    if ( bottom.rotation.x + bottom_movement <= max_bottom && bottom.rotation.x  + bottom_movement>= min_bottom){
-        bottom.rotation.x = bottom.rotation.x + bottom_movement ; 
-    }
 }
 
 function update_reboque(){
-    reboque.position.copy(reboquePosition);
+    var delta = clock.getDelta();
+  
+    // Update box position based on movement
+    if (moveForward) {
+        reboque.translateZ(-speed * delta);
+    }
+    if (moveBackward) {
+        reboque.translateZ(speed * delta);
+    }
+    if (moveLeft){
+        reboque.translateX(-speed * delta);
+    }
+    if (moveRight){
+        reboque.translateX(speed * delta);
+    }
 }
 
 /* RENDER */
@@ -406,34 +428,34 @@ function onKeyDown(e) {
             toggleWireframe();
             break;
         case 82: // key R
-            head_movement = Math.PI / 100;
+            moveHeadR = true;
             break;
         case 70: // key F 
-            head_movement = -Math.PI / 100;
+            moveHeadL = true;
             break;
         case 81: // key Q
-            feet_movement = Math.PI / 100;
+            moveFeetR = true;
             break;
         case 65: // key A
-            feet_movement = -Math.PI / 100;
+            moveFeetL = true;
             break;
         case 87: // key W
-            bottom_movement = Math.PI / 100;
+            moveBottomR = true;
             break;
         case 83: // key S
-            bottom_movement = -Math.PI / 100;
+            moveBottomL = true;
             break;
         case 37: // Left arrow key
-            reboquePosition.x -= reboqueSpeed;
+            moveLeft = true;
             break;
         case 38: // Up arrow key
-            reboquePosition.z -= reboqueSpeed;
+            moveForward = true;
             break;
         case 39: // Right arrow key
-            reboquePosition.x += reboqueSpeed;
+            moveRight = true;
             break;
         case 40: // Down arrow key
-            reboquePosition.z += reboqueSpeed;
+            moveBackward = true;
             break;
         default:
             break;
@@ -445,22 +467,34 @@ function onKeyUp(e) {
     'use strict';
     switch (e.keyCode) {
         case 82: // key R
-            head_movement = 0;
+            moveHeadR = false;
             break;
         case 70: // key F 
-            head_movement = 0;
+            moveHeadL = false;
             break;
         case 81: // key Q
-            feet_movement = 0;
+            moveFeetR = false;
             break;
         case 65: // key A
-            feet_movement = 0;
+            moveFeetL = false;
             break;
         case 87: // key W
-            bottom_movement = 0;
+            moveBottomR = false;
             break;
         case 83: // key S
-            bottom_movement = 0;
+            moveBottomL = false;
+            break;
+        case 37: // Left arrow key
+            moveLeft = false;
+            break;
+        case 38: // Up arrow key
+            moveForward = false;
+            break;
+        case 39: // Right arrow key
+            moveRight = false;
+            break;
+        case 40: // Down arrow key
+            moveBackward = false;
             break;
         default:
             break;
