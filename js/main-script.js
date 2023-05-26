@@ -356,56 +356,73 @@ function update_robot(delta){
     var max_arms_distance = 20;
     var min_arms_distance = 10;
 
+    var movement_head = new THREE.Vector3(0,0,0);
+    var movement_feet = new THREE.Vector3(0,0,0);
+    var movement_bottom = new THREE.Vector3(0,0,0);
+    var movement_armsL = new THREE.Vector3(0,0,0);
+    var movement_armsR = new THREE.Vector3(0,0,0);
+
     // ---ARMS---
     if (fullArmR.position.x + (speed * delta) <= max_arms_distance){
         if (moveArmsL) {
-            fullArmL.translateX(-speed * delta);
-            fullArmR.translateX(speed * delta);
+            movement_armsL.x -= speed * delta;
+            movement_armsR.x += speed * delta;
         }
     }
     if (fullArmR.position.x - (speed * delta) >= min_arms_distance){
         if (moveArmsR) {
-            fullArmL.translateX(speed * delta);
-            fullArmR.translateX(-speed * delta);
+            movement_armsL.x += speed * delta;
+            movement_armsR.x -= speed * delta;
         }
     }
+
+    fullArmL.translateX(movement_armsL.x);
+    fullArmR.translateX(movement_armsR.x);
+
     // ---BOTTOM---
     if ( current_bottom_rotation - ( speedR*delta )>= min_bottom ){
         if (moveBottomR){
-            bottom.rotateX(-speedR * delta);
+            movement_bottom.x -= speedR * delta;
             current_bottom_rotation -= speedR * delta;
         }
     }
     if (current_bottom_rotation + ( speedR*delta )<=max_bottom){
         if (moveBottomL){
-        bottom.rotateX(speedR * delta);
-        current_bottom_rotation += speedR * delta;
+            movement_bottom.x += speedR * delta;
+            current_bottom_rotation += speedR * delta;
     }}
+
+    bottom.rotateX(movement_bottom.x);
+
     // ---FEET---
     if ( current_feet_rotation - ( speedR*delta )>= min_feet ){
         if (moveFeetR){
-            feet.rotateX(-speedR * delta);
+            movement_feet.x -= speedR * delta;
             current_feet_rotation -= speedR * delta;
         }
     }
     if (current_feet_rotation + ( speedR*delta )<=max_feet){
         if (moveFeetL){
-            feet.rotateX(speedR * delta);
+            movement_feet.x += speedR * delta;
             current_feet_rotation += speedR * delta;
     }}
+
+    feet.rotateX(movement_feet.x);
+
     // ---HEAD---
     if ( current_head_rotation - ( speedR*delta )>= min_head ){
         if (moveHeadR){
-            fullhead.rotateX(-speedR * delta);
+            movement_head.x -= speedR * delta;
             current_head_rotation -= speedR * delta;
         }
     }
     if (current_head_rotation + ( speedR*delta )<=max_head){
         if (moveHeadL){
-            fullhead.rotateX(speedR * delta);
+            movement_head.x += speedR * delta;
             current_head_rotation += speedR * delta;
     }}
     
+    fullhead.rotateX(movement_head.x);
 }
 
 function update_reboque(delta){
